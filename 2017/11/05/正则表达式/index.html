@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Two:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,Regular Expression," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言温故而知新，可以为师矣。对于正则表达式的学习最好的方法还是多练多回顾，复习，走起！ 正则表达式（英文：Regular Expression，在代码中常简写为regex、regexp、RE）使用单个字符串来描述、匹配一系列符合某个语法规则的字符串搜索模式。它可用于所有文本搜索和文本替换的操作。简而言之，它就是通过计算机认识的语言制定的规则，能让计算机帮我们找到对应的东西。">
+<meta name="keywords" content="JavaScript,Regular Expression">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS正则表达式复习笔记">
+<meta property="og:url" content="http://huguokang.com/2017/11/05/正则表达式/index.html">
+<meta property="og:site_name" content="Hu Guokang&#39;s Blog">
+<meta property="og:description" content="前言温故而知新，可以为师矣。对于正则表达式的学习最好的方法还是多练多回顾，复习，走起！ 正则表达式（英文：Regular Expression，在代码中常简写为regex、regexp、RE）使用单个字符串来描述、匹配一系列符合某个语法规则的字符串搜索模式。它可用于所有文本搜索和文本替换的操作。简而言之，它就是通过计算机认识的语言制定的规则，能让计算机帮我们找到对应的东西。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-06T11:14:21.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS正则表达式复习笔记">
+<meta name="twitter:description" content="前言温故而知新，可以为师矣。对于正则表达式的学习最好的方法还是多练多回顾，复习，走起！ 正则表达式（英文：Regular Expression，在代码中常简写为regex、regexp、RE）使用单个字符串来描述、匹配一系列符合某个语法规则的字符串搜索模式。它可用于所有文本搜索和文本替换的操作。简而言之，它就是通过计算机认识的语言制定的规则，能让计算机帮我们找到对应的东西。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huguokang.com/2017/11/05/正则表达式/"/>
+
+
+
+
+
+  <title>JS正则表达式复习笔记 | Hu Guokang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c2147fd775c1737e1dd8be6d981dabf5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hu Guokang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Stupid is as stupid does.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huguokang.com/2017/11/05/正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hu Guokang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu Guokang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS正则表达式复习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T21:40:50+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/05/正则表达式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/05/正则表达式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>温故而知新，可以为师矣。对于正则表达式的学习最好的方法还是多练多回顾，复习，走起！</p>
+<p>正则表达式（英文：Regular Expression，在代码中常简写为regex、regexp、RE）使用单个字符串来描述、匹配一系列符合某个语法规则的字符串搜索模式。它可用于所有文本搜索和文本替换的操作。简而言之，它就是通过计算机认识的语言制定的规则，能让计算机帮我们找到对应的东西。<br><a id="more"></a></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="定义正则"><a href="#定义正则" class="headerlink" title="定义正则"></a>定义正则</h2><ol>
+<li><code>var re = new RegExp(&quot;a&quot;); //RegExp 对象，参数就是我们想要制定的规则</code></li>
+<li><code>var re = /a/; //简写方法（推荐使用，性能更好，不能为空）</code></li>
+</ol>
+<h2 id="正则的常用方法"><a href="#正则的常用方法" class="headerlink" title="正则的常用方法"></a>正则的常用方法</h2><h3 id="test"><a href="#test" class="headerlink" title="test():"></a>test():</h3><p>在字符串中查找符合正则的内容，若查找到返回true，反之则返回false。  </p>
+<p>用法：正则.test(字符串)  </p>
+<p>例子：判断是否是数字 </p>
+<pre><code>var str = &quot;4396&quot;;  
+var re = /\D/;  //  \D\代表非数字
+if (re.test(str)){
+    alert(&quot;不全是数字&quot;);
+} else{
+    alert(&quot;全是数字&quot;);
+}
+</code></pre><p>正则表达式中有很多符号，代表着不同的意思。  </p>
+<ul>
+<li>\s : 空格</li>
+<li>\S : 非空格</li>
+<li>\d : 数字</li>
+<li>\D : 非数字</li>
+<li>\w : 字符（字母、数字或者下划线）</li>
+<li>\W : 非字符<br>（不罗列了，下面会根据例子依次讲一些常用的字符）</li>
+</ul>
+<h3 id="search"><a href="#search" class="headerlink" title="search():"></a>search():</h3><p>在字符串搜索符合正则的内容，搜索到就返回出现的位置（从0开始，如果匹配的不只是一个字母，那就只会返回第一个字母的位置），如果搜索失败就返回-1。  </p>
+<p>用法：字符串.search(正则)  </p>
+<p><strong>NOTE:</strong> 正则中默认区分大小写，如果想不区分大小写，就在正则的最后加修饰符<code>i</code>（ignore的缩写）。  </p>
+<p>例子：在字符串中查找字母b，且不区分大小写</p>
+<pre><code>var str = &quot;abcdf&quot;;
+var re = /B/i; //也可以写成 var re = new RegExp(&apos;B&apos;,&apos;i&apos;);
+
+alert(str.search(re));  //1
+</code></pre><h3 id="match"><a href="#match" class="headerlink" title="match():"></a>match():</h3><p>在字符串中搜索符合规则的内容，搜索成功就返回内容，格式为<strong>数组</strong>，失败就返回null。  </p>
+<p>用法：字符串.match(正则)   </p>
+<p>量词：<code>+</code>代表至少匹配一次  </p>
+<p>全局匹配：<code>g</code>（global的缩写，正则中默认，只要搜索到符合规则的内容就会结束搜索）  </p>
+<p>例子：找出指定格式的所有数字  </p>
+<pre><code>var str = &quot;rng1skt2rng3skt45&quot;;
+var re = /\d/g;  //每次匹配至少一个数字且全局匹配，如果不是全局匹配，当找到数字1，它就会停止。
+加上全局匹配就会从开始到结束一直去搜索符合规则的。如果没有加号，匹配的结果就是[1,2,3,4,5] ，这
+并不是我们想要的。
+alert(str.match(re));  //[1,2,3,45]
+</code></pre><h3 id="replace"><a href="#replace" class="headerlink" title="replace():"></a>replace():</h3><p>查找符合正则的字符串，就替换成对应的字符串。返回替换后的内容。  </p>
+<p>用法：字符串.replace(正则，新的字符串/回调函数)（在回调函数中，第一个参数指的是每次匹配成功的字符）  </p>
+<p>例子：敏感词过滤。  </p>
+<pre><code>var str = &quot;我爱北京天安门，天安门上太阳升&quot;;
+var re = /北京|天安门/g;
+var str2 = str.replace(re,&apos;*&apos;);
+alert(str2)  //我爱**，*上太阳升
+//这种只是把找到的变成了一个 * ，并不能几个字就对应几个 * 。
+</code></pre><p>要想实现几个字对应几个 * ，我们可以用回调函数实现。  </p>
+<pre><code>var str = &quot;我爱北京天安门，天安门上太阳升&quot;
+var re = /北京|天安门/g;
+var str2 = str.replace(re,function(str){
+alert(str); //用来测试：函数的第一个参数代表每次搜索到的符合正则的字符，所以第一次str指的是北京，
+第二次str是天安门，第三次str是天安门
+var result = &apos;&apos;;
+for(var i=0;i&lt;str.length;i++){
+    result += &apos;*&apos;;
+}
+    return result;
+});
+alert(str2)  //我爱*****，***上太阳升
+</code></pre><h2 id="正则中的字符"><a href="#正则中的字符" class="headerlink" title="正则中的字符"></a>正则中的字符</h2><p><strong>():</strong> 小括号，叫做分组符。相当于数学里面的括号。</p>
+<pre><code>var str = &apos;2013-6-7&apos;;
+var re1 = /\d-+/g;  //全局匹一个数字，横杠，横杠数量至少为1，匹配结果为：[&apos;3-&apos;,&apos;6-&apos;]
+var re2 = /(\d-)+/g;  //全局匹配数字，横杠，数字和横杠整体数量至少为1，匹配结果为：[&apos;3-6-&apos;]
+var re3 = /(\d+)(-)/g;  //全局匹配至少一个数字，匹配一个横杠，匹配结果为：[&apos;2013-&apos;,&apos;6-&apos;]
+</code></pre><p>正则中的每一个带小括号的项，都叫做这个正则的子项。  </p>
+<p>例子：让2013-6-7变成2013.6.7  </p>
+<pre><code>var str = &apos;2013-6-7&apos;;
+var re = /(\d+)(-)/g;
+str = str.replace(re,function($0,$1,$2) {
+//replace()中如果有子项，
+//第一个参数：$0 (匹配成功后的整体结果 2013-, 6-)，
+//第二个参数：$1 (匹配成功后的第一个分组，这里指的是 \d ，2013, 6 )，
+//第三个参数：$2 (匹配成功后的第二个分组，这里指的是 - ，-, -)。
+    return $1 + &apos;.&apos;;
+});
+alert(str);
+</code></pre><p>match 方法也会返回自己的子项，如下：</p>
+<pre><code>var str = &apos;abc&apos;;
+var re = /(a)(b)(c)/;
+alert(str.match(re)); //[abc,a,b,c]
+//返回的是匹配结果以及每一个子项，当 match 不加 g 的时候才可以取到子项的集合
+</code></pre><p><strong>补充:</strong>exec() 方法和 match() 方法类似，搜索符合规则的内容，并返回内容，格式为数组。</p>
+<p>用法：正则.exec(字符串)</p>
+<p>属性：input //代表要匹配的字符串；index //每次匹配成功的字符串中第一个字符的位置</p>
+<p>例子一：</p>
+<pre><code>var testStr = &quot;now test001 test002&quot;;
+var re = /test(\d+)/; //不是全局匹配，只匹配一次
+var r = re.exec(testStr);
+console.log(r);
+//[&apos;test001&apos;,&apos;001&apos;,index:4,input:&apos;now test001 test002&apos;]
+//返回了包含匹配结果、子项、index属性、input属性的数组
+//另外 r.length = 2
+</code></pre><p>例子二：</p>
+<pre><code>var testStr = &quot;now test001 test002&quot;;
+var re = /test(/d+)/g; //全局匹配
+var r = re.exec(testStr);
+console.log(r);
+//[&apos;test001&apos;,&apos;001&apos;,index:4,input:&apos;now test001 test002&apos;]
+//结果为啥一样，我用 while 循环，可一直匹配出这个结果，并没有接着上次匹配的位置开//始匹配。
+</code></pre><p><strong>[]:</strong>表示某个集合中的任意一个，比如[abc]整体代表一个字符，匹配 a b c 中的任意一个，也可以是范围，范围必须从小到大[0-9]。</p>
+<p><strong>[^a]:</strong>整体代表一个字符，<code>^</code>写在<code>[]</code>里面的话，就代表排除的意思。</p>
+<p>例子：匹配 HTML 标签，比如<code>&lt;div class=&quot;b&quot;&gt;hahaha&lt;/div&gt;</code>找出标签<code>&lt;div class=&quot;b&quot;&gt;&lt;/div&gt;</code></p>
+<pre><code>var re = /&lt;[^&gt;]+&gt;/g; 
+//匹配左括号，中间至少一个非右括号的内容（标签里面的一些东西），然后匹配右括号
+var re = /&lt;[\w\W]+&gt;/g;
+//匹配左括号，中间至少一个字符或者非字符的内容，然后匹配右括号
+</code></pre><p><strong>转义字符</strong></p>
+<p>除了前面提到的六个还包括：</p>
+<p><code>.</code> ：任意字符</p>
+<p><code>\.</code>: 真正的点</p>
+<p><code>\b</code> ：独立的部分（起始，结束，空格）</p>
+<p><code>\B</code> : 非独立的部分</p>
+<p>关于最后两个我们来看个例子：</p>
+<pre><code>var str1 = &quot;onetwo&quot;;
+var str2 = &quot;one two&quot;;
+var re = /one\b/; //e 后面必须是独立的
+console.log(re.test(str1)); //false
+console.log(re.test(str2)); //true
+</code></pre><p>例子：写一个用 class 名获取节点的函数</p>
+<p>我们之前可能见过这样的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function getByClass(parent,classname) &#123;</div><div class="line">    if (parent.getElementByClassName) &#123;</div><div class="line">        return parent.getElementByClassName(classname);</div><div class="line">    &#125; else &#123;</div><div class="line">        var results = new Array(); //用来存储所有取到的 class 为 box 的元素</div><div class="line">        var elems = parent.getElementsByTagName(&quot;*&quot;);</div><div class="line">        for (var i=0;i&lt;elems.length;i++) &#123;</div><div class="line">            if (elems[i].className == classname) &#123;</div><div class="line">                results.push(elems[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return results;    </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这其实是存在问题的，比如它如果一个标签里面有两个 class ，或者存在相同名字的 class ，比如<code>&lt;div class=&quot;box1 box1&quot;&gt;</code>，<code>&lt;div class=&quot;box1 box2&quot;&gt;</code>它就没办法了，我们可以用正则来解决这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function getByClass(parent,classname) &#123;</div><div class="line">    if (parent.getElementsByClassName) &#123;</div><div class="line">        return parent.getElementsByClassName(classname);</div><div class="line">    &#125; else &#123;</div><div class="line">        var arr = [];</div><div class="line">        var aEle = parent.getElementsByTagName(&quot;*&quot;);</div><div class="line">        //var re = /\bclassname\b/;</div><div class="line">        //不能这样写，当正则需要用到参数时候，一定要用全称的写法，简写方法会把 //clasname当作一个字符串去匹配。</div><div class="line">        var re = new RegExp(&apos;\\b&apos;+classname+&apos;\\b&apos;);</div><div class="line">        //匹配的时候，classname 前面必须是起始或者空格，后面也是。</div><div class="line">        //默认匹配成功就停止，所以就算有重复的也不会再匹配进去了。</div><div class="line">        //需要注意的是，全称的方式声明正则的时候，参数是字符串类型的，所以我们用//的时候，需要保证这些特殊的字符在字符串内也能输出才行。\b本身是特殊字</div><div class="line">        //符，在字符串中无法输出，需要加反斜杠转义。</div><div class="line">        for (var i=0;i&lt;aEle.length;i++) &#123;</div><div class="line">            if (re.test(aEle[i].className)) &#123;</div><div class="line">                arr.push(aEle[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return arr;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>\a:</strong>表示重复的某个子项，比如：</p>
+<p><code>\1</code> ：重复的第一个子项</p>
+<p><code>\2</code> ：重复的第二个子项</p>
+<pre><code>/(a)(b)(c)\1/    //匹配 abca
+/(a)(b)(c)\1+/   //匹配 abcaa,abcaaa···（子项 a 至少重复一次）
+/(a)(b)(c)\2/    //匹配 abcb
+</code></pre><p>例子：找重复项最多的字符个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var  str =&quot;assssjdssskssalsssdkjsssdss&quot;;</div><div class="line">var arr = str.split(&apos;&apos;); //把字符串分割为数组</div><div class="line">str = arr.sort().join(&apos;&apos;); //先排序，在转化为字符串</div><div class="line">var value = &apos;&apos;; </div><div class="line">var index = 0;</div><div class="line">var re = /(\w)\1+/g; //匹配字符且重复这个字符，重复次数至少一次</div><div class="line">str.replace(re,function($0,$1) &#123;</div><div class="line">    //$0 代表每次匹配成功的结果：aa dd jj kk l sssssssssssssssss</div><div class="line">    //$1 代表每次匹配成功的第一个子项：a d j k l s</div><div class="line">    if (index&lt;$0.length) &#123;</div><div class="line">        index = $0.length;</div><div class="line">        value = $1;</div><div class="line">    // 没匹配到一次执行一次if语句，直到最后</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">console.log(&apos;最多的字符:&apos;+value+&apos;重复的次数&apos;+index);</div></pre></td></tr></table></figure>
+<p><strong>量词:</strong>代表出现的次数</p>
+<p><code>{n,m}</code>: 至少出现 n 次，最多 m 次</p>
+<p><code>{n,}</code>: 至少 n 次</p>
+<p><code>*</code> ：任意次，相当于{0,}</p>
+<p><code>?</code> : 零次或者一次，相当于{0，1}</p>
+<p><code>+</code> ：至少一次，相当于{1,}</p>
+<p><code>{n}</code>；正好 n 次</p>
+<p>例子：判断是不是 QQ 号</p>
+<p><code>^</code>放在正则最开始的位置，就代表起始的意思，注意<code>/[^a]/</code>和<code>/^[a]/</code>是不一样的，前者是排除的意思，后者代表首位。</p>
+<p><code>$</code>放在正则的最后位置，就代表结束的意思</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//首先想 QQ 号的规则，第一条首位不能是0，第二条必须是5-12位的数字</div><div class="line">var aInput = document.getElementsByTagName(&apos;input&apos;);</div><div class="line">var re = /^[1-9]\d&#123;4,11&#125;$/;</div><div class="line">//为了防止 123456abc 这种情况，所以必须限制最后</div><div class="line">//首位是0-9，接着是4-11位的数字类型</div><div class="line">aInput[1].onclick = function() &#123;</div><div class="line">    if (re.test(aInput[0].value)) &#123;</div><div class="line">        alert(&apos;是 QQ 号&apos;);</div><div class="line">    &#125; else &#123;</div><div class="line">        alert(&apos;不是 QQ 号&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>例子：去掉前后空格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var str = &apos;  hello  &apos;;</div><div class="line">alert(&apos;(&apos;+trim(str)+&apos;)&apos;);</div><div class="line">//为了看出区别所以加上括号  (hello)</div><div class="line">function trim(str) &#123;</div><div class="line">    var re = /^\s+|\s+$/g;</div><div class="line">    retrun str.replace(re,&apos;&apos;); //把空格替换成空</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong>常用的一些表单校验</strong></p>
+<p>匹配中文：<code>[\u4e00-\u9fa5]</code> //中文 ACALL 码的范围</p>
+<p>行首行尾空格：<code>^\s*|\s*$</code> //首行出现任意个空格或者尾行出现任意个空格</p>
+<p>Email：<code>^\w+@[a-z0-9]+(\.[a-z]+){1,3}$</code></p>
+<p>//起始至少为一个字符，然后匹配<code>@</code>，接着为任意小写字母或者数字，<br><code>\.</code>代表真正的点，<code>.</code>后面为至少一个字符（a-z），<br>同时这个（比如 .com ）整体为一个子项作为结束，可以出现1-3次。</p>
+<p>网址：<code>[a-zA-Z]+://[^\s]*</code> //匹配不分大小写的任意字母，接着是//，后面是非空格的任意字符</p>
+<p>邮政编码：<code>[1-9]\d{5}</code> //起始数字不能为0，然后是5个数字</p>
+<p>身份证：<code>[1-9]\d{14}|[1-9]\d{17}|[1-9]\d{16}x</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Regular-Expression/" rel="tag"># Regular Expression</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/03/Vue.js学习笔记2/" rel="next" title="Vue.js学习笔记2">
+                <i class="fa fa-chevron-left"></i> Vue.js学习笔记2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Hu Guokang" />
+            
+              <p class="site-author-name" itemprop="name">Hu Guokang</p>
+              <p class="site-description motion-element" itemprop="description">天道酬勤，功不唐捐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/HGKcoding" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:huguokang2017@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+
+ <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></iframe>         
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义正则"><span class="nav-number">2.1.</span> <span class="nav-text">定义正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则的常用方法"><span class="nav-number">2.2.</span> <span class="nav-text">正则的常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#test"><span class="nav-number">2.2.1.</span> <span class="nav-text">test():</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search"><span class="nav-number">2.2.2.</span> <span class="nav-text">search():</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#match"><span class="nav-number">2.2.3.</span> <span class="nav-text">match():</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-number">2.2.4.</span> <span class="nav-text">replace():</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则中的字符"><span class="nav-number">2.3.</span> <span class="nav-text">正则中的字符</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hu Guokang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://blog-vxrbvtbdqy.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://huguokang.com/2017/11/05/正则表达式/';
+          this.page.identifier = '2017/11/05/正则表达式/';
+          this.page.title = 'JS正则表达式复习笔记';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://blog-vxrbvtbdqy.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
