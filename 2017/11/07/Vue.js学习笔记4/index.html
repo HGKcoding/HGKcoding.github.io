@@ -125,18 +125,18 @@
 
 
 
-<meta name="description" content="Class 与 Style 绑定">
+<meta name="description" content="Class 与 Style 绑定操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用v-bind处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。对此，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。">
 <meta name="keywords" content="Vue.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue.js学习笔记4">
 <meta property="og:url" content="http://huguokang.com/2017/11/07/Vue.js学习笔记4/index.html">
 <meta property="og:site_name" content="Hu Guokang&#39;s Blog">
-<meta property="og:description" content="Class 与 Style 绑定">
+<meta property="og:description" content="Class 与 Style 绑定操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用v-bind处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。对此，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-07T06:36:47.008Z">
+<meta property="og:updated_time" content="2017-11-08T01:28:32.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js学习笔记4">
-<meta name="twitter:description" content="Class 与 Style 绑定">
+<meta name="twitter:description" content="Class 与 Style 绑定操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用v-bind处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。对此，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。">
 
 
 
@@ -384,17 +384,6 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/07/Vue.js学习笔记4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/07/Vue.js学习笔记4/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -410,6 +399,26 @@
                  <span class="leancloud-visitors-count"></span>
              </span>
           
+
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">1,624(字)</span>
+           
+          </span>
+	  
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+          </span>
+          <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">7(分)</span>
+           
+          </span>
 
           
 
@@ -430,7 +439,156 @@
       
 
       
-        <h1 id="Class-与-Style-绑定"><a href="#Class-与-Style-绑定" class="headerlink" title="Class 与 Style 绑定"></a>Class 与 Style 绑定</h1>
+        <h1 id="Class-与-Style-绑定"><a href="#Class-与-Style-绑定" class="headerlink" title="Class 与 Style 绑定"></a>Class 与 Style 绑定</h1><p>操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用<code>v-bind</code>处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。对此，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。</p>
+<a id="more"></a>
+<h2 id="绑定-HTML-Class"><a href="#绑定-HTML-Class" class="headerlink" title="绑定 HTML Class"></a>绑定 HTML Class</h2><h3 id="对象语法"><a href="#对象语法" class="headerlink" title="对象语法"></a>对象语法</h3><p>我们可以传给<code>v-bind:class</code>一个对象来动态地切换 class ：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;{ active: isActive }&quot;&gt;&lt;/div&gt;
+</code></pre><p><code>active</code>这个 class 存在与否取决于数据属性<code>isActive</code>的<code>truthiness</code>。</p>
+<p>你可以在对象中传入更多属性来动态切换多个 class 。此外，<code>v-bind:class</code>指令也可以与普通的 class 属性共存。</p>
+<pre><code>// HTML
+&lt;div class=&quot;static&quot;
+     v-bind:class=&quot;{ active: isActive, &apos;text-danger&apos;: hasError }&quot;&gt;
+&lt;/div&gt;
+</code></pre><p>下面的 data :</p>
+<pre><code>// JS
+data: {
+  isActive: true,
+  hasError: false
+}
+</code></pre><p>结果渲染为：</p>
+<pre><code>// HTML
+&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
+</code></pre><p>绑定的数据对象不必内联定义在模版里：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;classObject&quot;&gt;&lt;/div&gt;
+</code></pre><hr>
+<pre><code>// JS
+data: {
+  classObject: {
+    active: true,
+    &apos;text-danger&apos;: false
+  }
+}
+</code></pre><p>渲染的结果和上面一样。我们也可以在这里绑定一个返回对象的<strong>计算属性</strong>。这是一个常用且强大的模式：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;classObject&quot;&gt;&lt;/div&gt;
+</code></pre><hr>
+<pre><code>// JS
+data: {
+  isActive: true,
+  error: null
+},
+computed: {
+  classObject: function () {
+    return {
+      active: this.isActive &amp;&amp; !this.error,
+      &apos;text-danger&apos;: this.error &amp;&amp; this.error.type === &apos;fatal&apos;
+    }
+  }
+}
+</code></pre><h3 id="数组语法"><a href="#数组语法" class="headerlink" title="数组语法"></a>数组语法</h3><p>我们可以把一个数组传递给<code>v-bind:class</code>以应用一个 class 列表：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre><hr>
+<p>   // JS<br>   data: {<br>     activeClass: ‘active’,<br>     errorClass: ‘text-danger’<br>   }</p>
+<p>渲染为：</p>
+<pre><code>// HTML
+&lt;div class=&quot;active text-danger&quot;&gt;&lt;/div&gt;
+</code></pre><p>如果你也想根据条件切换列表中的 class ，可以用三元表达式：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;[isActive ? activeClass : &apos;&apos;, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre><p>当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法：</p>
+<pre><code>// HTML
+&lt;div v-bind:class=&quot;[{ active: isActive }, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre><h3 id="用在组件上"><a href="#用在组件上" class="headerlink" title="用在组件上"></a>用在组件上</h3><h2 id="绑定内联样式"><a href="#绑定内联样式" class="headerlink" title="绑定内联样式"></a>绑定内联样式</h2><h3 id="对象语法-1"><a href="#对象语法-1" class="headerlink" title="对象语法"></a>对象语法</h3><p><code>v-bind:style</code>的对象语法看着非常像 CSS ，但其实是一个 JavaScript 对象。CSS 属性名可以用驼峰式或短横线分隔（用单引号括起来）来命名：</p>
+<pre><code>// HTML
+&lt;div v-bind:style=&quot;{ color: activeColor, fontSize: fontSize + &apos;px&apos; }&quot;&gt;&lt;/div&gt;
+</code></pre><hr>
+<pre><code>data: {
+  activeColor: &apos;red&apos;,
+  fontSize: 30
+}
+</code></pre><p>直接绑定到一个样式对象会让模板更清晰：</p>
+<pre><code>// HTML
+&lt;div v-bind:style=&quot;styleObject&quot;&gt;&lt;/div&gt;
+</code></pre><hr>
+<pre><code>// JS
+data: {
+  styleObject: {
+    color: &apos;red&apos;,
+    fontSize: &apos;13px&apos;
+  }
+}
+</code></pre><p>同样的，对象语法常常结合返回对象的计算属性使用。</p>
+<h3 id="数组语法-1"><a href="#数组语法-1" class="headerlink" title="数组语法"></a>数组语法</h3><p><code>v-bind:style</code>的数组语法可以将多个样式对象应用到同一个元素上：</p>
+<pre><code>// HTML
+&lt;div v-bind:style=&quot;[baseStyles, overridingStyles]&quot;&gt;&lt;/div&gt;
+</code></pre><h3 id="自动添加前缀"><a href="#自动添加前缀" class="headerlink" title="自动添加前缀"></a>自动添加前缀</h3><p>当<code>v-bind:style</code>使用需要添加浏览器引擎前缀的 CSS 属性时，Vue.js 会自动侦测并添加相应的前缀。</p>
+<h3 id="多重值"><a href="#多重值" class="headerlink" title="多重值"></a>多重值</h3><p>从 2.3.0 起你可以为<code>style</code>绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：</p>
+<pre><code>// HTML
+&lt;div :style=&quot;{ display: [&apos;-webkit-box&apos;, &apos;-ms-flebox&apos;, &apos;flex&apos;] }&quot;&gt;&lt;/div&gt;
+</code></pre><p>这样写只会渲染数组中最后一个被浏览器支持的值。</p>
+<h1 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h1><h2 id="v-if"><a href="#v-if" class="headerlink" title="v-if"></a>v-if</h2><p>在字符串模板中，比如 Handlebars ，我们得像这样写一个条件块：</p>
+<pre><code>// HTML
+&lt;!-- Handlebars 模板 --&gt;
+{{#if ok}}
+  &lt;h1&gt;Yes&lt;/h1&gt;
+{{/if}}
+</code></pre><p>在 Vue 中。我们使用<code>v-if</code>指令实现同样的功能：</p>
+<pre><code>// HTML
+&lt;h1 v-if=&quot;ok&quot;&gt;Yes&lt;/h1&gt;  
+</code></pre><p>也可以用<code>v-esle</code>添加一个“else块”：</p>
+<pre><code>// HTML
+&lt;h1 v-if=&quot;ok&quot;&gt;Yes&lt;/h1&gt;
+&lt;h1 v-else&gt;No&lt;/h1&gt;
+</code></pre><h3 id="在-template-元素上使用-v-if-条件渲染分组"><a href="#在-template-元素上使用-v-if-条件渲染分组" class="headerlink" title="在 template 元素上使用 v-if 条件渲染分组"></a>在 template 元素上使用 v-if 条件渲染分组</h3><p>因为<code>v-if</code>是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个<code>&lt;template&gt;</code>元素当做不可见的包裹元素，并在上面使用<code>v-if</code>。最终的渲染结果将不包含<code>&lt;template&gt;</code>元素。</p>
+<pre><code>// HTML
+&lt;template v-if=&quot;ok&quot;&gt;
+  &lt;h1&gt;Title&lt;/h1&gt;
+  &lt;p&gt;Paragraph 1&lt;/p&gt;
+  &lt;p&gt;Paragraph 2&lt;/p&gt;
+&lt;/template&gt;
+</code></pre><h3 id="v-else"><a href="#v-else" class="headerlink" title="v-else"></a>v-else</h3><p>你可以使用<code>v-else</code>指令来表示<code>v-if</code>的“else块”：</p>
+<pre><code>// HTML
+&lt;div v-if=&quot;Math.random() &gt; 0.5&quot;&gt;
+  Now you see me
+&lt;/div&gt;
+&lt;div v-else&gt;
+  Now you don&apos;t
+&lt;/div&gt;
+</code></pre><p><code>v-else</code>元素必须跟在带<code>v-if</code>或者<code>v-else-if</code>的元素的后面，否则它将不会被识别。</p>
+<h3 id="v-else-if"><a href="#v-else-if" class="headerlink" title="v-else-if"></a>v-else-if</h3><p>充当<code>v-if</code>的“else-if块”，可以连续使用</p>
+<h3 id="用-key-管理可复用的元素"><a href="#用-key-管理可复用的元素" class="headerlink" title="用 key 管理可复用的元素"></a>用 key 管理可复用的元素</h3><p>Vue 会Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。这么做除了使 Vue 变得非常快之外，还有其它一些好处。例如，如果你允许用户在不同的登录方式之间切换：</p>
+<pre><code>// HTML
+&lt;template v-if=&quot;loginType === &apos;username&apos;&quot;&gt;
+  &lt;label&gt;Username&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your username&quot;&gt;
+&lt;/template&gt;
+&lt;template v-else&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your email address&quot;&gt;
+&lt;/template&gt;
+</code></pre><p>上面的代码中切换<code>loginType</code>将不会清除用户已经输入的内容。因为两个模板使用了相同的元素，<code>&lt;input&gt;</code>仅仅替换了它的<code>placeholder</code>。</p>
+<p>这样也不总是符合实际需求，所以 Vue 提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需要添加一个具有唯一值的 key 属性即可：</p>
+<pre><code>// HTML
+&lt;template v-if=&quot;loginType === &apos;username&apos;&quot;&gt;
+  &lt;label&gt;Username&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your username&quot; key=&quot;username-input&quot;&gt;
+&lt;/template&gt;
+&lt;template v-else&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input placeholder=&quot;Enter your email address&quot; key=&quot;email-input&quot;&gt;
+&lt;/template&gt;
+</code></pre><p>这样的话，每次切换时，输入框都将被重新渲染。<code>&lt;label&gt;</code>元素仍然会被高效地复用。</p>
+<h2 id="v-show"><a href="#v-show" class="headerlink" title="v-show"></a>v-show</h2><p><code>v-show</code>也可以根据条件展示元素，不同的是带有<code>v-show</code>的元素始终会被渲染并保留在 DOM 中。<code>v-show</code>只是简单地切换元素的 CSS 属性<code>display</code>。</p>
+<p><strong>NOTE:</strong><code>v-show</code>不支持<code>&lt;template&gt;</code>元素和<code>v-else</code>。</p>
+<h2 id="v-if-vs-v-show"><a href="#v-if-vs-v-show" class="headerlink" title="v-if vs v-show"></a>v-if vs v-show</h2><p><code>v-if</code>是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。</p>
+<p><code>v-if</code>也是<strong>惰性的</strong>：如果在初始渲染时条件为假，则什么也不做直到条件第一次变为真时，才会开始渲染条件块。</p>
+<p>相比之下，<code>v-show</code>不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。</p>
+<p>一般来说，<code>v-if</code>有更高的切换开销，而<code>v-show</code>有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用<code>v-show</code>较好；如果在运行时条件很少改变，则使用<code>v-if</code>较好。</p>
+<h2 id="v-if-与-v-for-一起使用"><a href="#v-if-与-v-for-一起使用" class="headerlink" title="v-if 与 v-for 一起使用"></a>v-if 与 v-for 一起使用</h2><p>当<code>v-if</code>与<code>v-for</code>一起使用时，<code>v-for</code>具有更高的优先级。</p>
+
       
     </div>
     
@@ -442,7 +600,21 @@
     
 
     
-
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+    </div>
+      
     <footer class="post-footer">
       
         <div class="post-tags">
@@ -496,16 +668,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    </div>
 
   
 
@@ -623,9 +785,6 @@
           
 <br>
 
- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
-src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></iframe>         
-
           
 
         </div>
@@ -641,7 +800,7 @@ src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></ifra
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Class-与-Style-绑定"><span class="nav-number">1.</span> <span class="nav-text">Class 与 Style 绑定</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Class-与-Style-绑定"><span class="nav-number">1.</span> <span class="nav-text">Class 与 Style 绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定-HTML-Class"><span class="nav-number">1.1.</span> <span class="nav-text">绑定 HTML Class</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象语法"><span class="nav-number">1.1.1.</span> <span class="nav-text">对象语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组语法"><span class="nav-number">1.1.2.</span> <span class="nav-text">数组语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用在组件上"><span class="nav-number">1.1.3.</span> <span class="nav-text">用在组件上</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定内联样式"><span class="nav-number">1.2.</span> <span class="nav-text">绑定内联样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象语法-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">对象语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组语法-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">数组语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动添加前缀"><span class="nav-number">1.2.3.</span> <span class="nav-text">自动添加前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多重值"><span class="nav-number">1.2.4.</span> <span class="nav-text">多重值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件渲染"><span class="nav-number">2.</span> <span class="nav-text">条件渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if"><span class="nav-number">2.1.</span> <span class="nav-text">v-if</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-template-元素上使用-v-if-条件渲染分组"><span class="nav-number">2.1.1.</span> <span class="nav-text">在 template 元素上使用 v-if 条件渲染分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-else"><span class="nav-number">2.1.2.</span> <span class="nav-text">v-else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-else-if"><span class="nav-number">2.1.3.</span> <span class="nav-text">v-else-if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-key-管理可复用的元素"><span class="nav-number">2.1.4.</span> <span class="nav-text">用 key 管理可复用的元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-show"><span class="nav-number">2.2.</span> <span class="nav-text">v-show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-vs-v-show"><span class="nav-number">2.3.</span> <span class="nav-text">v-if vs v-show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-与-v-for-一起使用"><span class="nav-number">2.4.</span> <span class="nav-text">v-if 与 v-for 一起使用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -811,26 +970,6 @@ src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></ifra
 
   
 
-    
-      <script id="dsq-count-scr" src="https://blog-vxrbvtbdqy.disqus.com/count.js" async></script>
-    
-
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'http://huguokang.com/2017/11/07/Vue.js学习笔记4/';
-          this.page.identifier = '2017/11/07/Vue.js学习笔记4/';
-          this.page.title = 'Vue.js学习笔记4';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://blog-vxrbvtbdqy.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
-    
-
-  
-
 
 
 
@@ -843,6 +982,10 @@ src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></ifra
   
 
 
+
+
+
+  
 
 
 
@@ -980,6 +1123,10 @@ src="//music.163.com/outchain/player?type=2&id=22712173&auto=0&height=66"></ifra
   
 
   
+
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
 
 </body>
 </html>
