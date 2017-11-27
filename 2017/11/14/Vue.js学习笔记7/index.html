@@ -133,7 +133,7 @@
 <meta property="og:site_name" content="Hu Guokang&#39;s Blog">
 <meta property="og:description" content="组件什么是组件？组件 (Component) 是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素，Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以表现为用 is 特性进行了扩展的原生 HTML 元素。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-17T01:11:17.417Z">
+<meta property="og:updated_time" content="2017-11-17T01:13:26.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js学习笔记7">
 <meta name="twitter:description" content="组件什么是组件？组件 (Component) 是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素，Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以表现为用 is 特性进行了扩展的原生 HTML 元素。">
@@ -476,7 +476,6 @@
 <h3 id="data-必须是函数"><a href="#data-必须是函数" class="headerlink" title="data 必须是函数"></a>data 必须是函数</h3><p>如果实例中的<code>data</code>不是一个函数，那么 Vue 会停止运行，并在控制台发出警告。</p>
 <p>举一个特殊的例子：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example-2"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">simple-counter</span>&gt;</span><span class="tag">&lt;/<span class="name">simple-counter</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">simple-counter</span>&gt;</span><span class="tag">&lt;/<span class="name">simple-counter</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">simple-counter</span>&gt;</span><span class="tag">&lt;/<span class="name">simple-counter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<hr>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = &#123; <span class="attr">counter</span>: <span class="number">0</span> &#125;</div><div class="line">Vue.component(<span class="string">'simple-counter'</span>, &#123;</div><div class="line">  template: <span class="string">'&lt;button v-on:click="counter += 1"&gt;&#123;&#123; counter &#125;&#125;&lt;/button&gt;'</span>,</div><div class="line">  <span class="comment">// 技术上 data 的确是一个函数，因此 Vue 不会警告，</span></div><div class="line">  <span class="comment">// 但是我们却给每个组件实例返回了同一个对象的引用</span></div><div class="line">  data: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> data</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-2'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>由于这三个组件实例共享了同一个<code>data</code>对象，因此递增一个 counter 会影响所有组件。</p>
 <p>我们可以通过为每个组件返回全新的数据对象来修复这个问题：</p>
@@ -768,6 +767,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/11/17/Vue.js学习笔记8/" rel="prev" title="Vue.js学习笔记8">
+                Vue.js学习笔记8 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -855,7 +858,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -877,7 +880,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

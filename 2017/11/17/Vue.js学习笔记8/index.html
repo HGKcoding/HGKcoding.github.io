@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Two:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Vue.js," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hu Guokang's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="进入/离开 &amp;amp; 列表过渡概述Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：  在 CSS 过渡和动画中自动应用 class 可以配合使用第三方 CSS 动画库，如 Animate.css 在过渡钩子函数中使用 JavaScript 直接操作 DOM 可以配合使用第三方 JavaScript 动画库，如 Velocity.js">
+<meta name="keywords" content="Vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js学习笔记8">
+<meta property="og:url" content="http://huguokang.com/2017/11/17/Vue.js学习笔记8/index.html">
+<meta property="og:site_name" content="Hu Guokang&#39;s Blog">
+<meta property="og:description" content="进入/离开 &amp;amp; 列表过渡概述Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：  在 CSS 过渡和动画中自动应用 class 可以配合使用第三方 CSS 动画库，如 Animate.css 在过渡钩子函数中使用 JavaScript 直接操作 DOM 可以配合使用第三方 JavaScript 动画库，如 Velocity.js">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-21T12:03:23.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js学习笔记8">
+<meta name="twitter:description" content="进入/离开 &amp;amp; 列表过渡概述Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：  在 CSS 过渡和动画中自动应用 class 可以配合使用第三方 CSS 动画库，如 Animate.css 在过渡钩子函数中使用 JavaScript 直接操作 DOM 可以配合使用第三方 JavaScript 动画库，如 Velocity.js">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huguokang.com/2017/11/17/Vue.js学习笔记8/"/>
+
+
+
+
+
+  <title>Vue.js学习笔记8 | Hu Guokang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c2147fd775c1737e1dd8be6d981dabf5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hu Guokang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Stupid is as stupid does.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huguokang.com/2017/11/17/Vue.js学习笔记8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="胡国康">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu Guokang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue.js学习笔记8</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T09:24:19+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/17/Vue.js学习笔记8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/11/17/Vue.js学习笔记8/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Vue.js学习笔记8/" class="leancloud_visitors" data-flag-title="Vue.js学习笔记8">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">3,968(字)</span>
+           
+          </span>
+	  
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+          </span>
+          <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">18(分)</span>
+           
+          </span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h1 id="进入-离开-amp-列表过渡"><a href="#进入-离开-amp-列表过渡" class="headerlink" title="进入/离开 &amp; 列表过渡"></a>进入/离开 &amp; 列表过渡</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：</p>
+<ul>
+<li>在 CSS 过渡和动画中自动应用 class</li>
+<li>可以配合使用第三方 CSS 动画库，如 Animate.css</li>
+<li>在过渡钩子函数中使用 JavaScript 直接操作 DOM</li>
+<li>可以配合使用第三方 JavaScript 动画库，如 Velocity.js</li>
+</ul>
+<a id="more"></a>
+<h2 id="单元素-组件的过渡"><a href="#单元素-组件的过渡" class="headerlink" title="单元素/组件的过渡"></a>单元素/组件的过渡</h2><p>Vue 提供了 <code>transition</code> 的封装组件，在下列情形中，可以给任何元素和组件添加 entering/leaving 过渡</p>
+<ul>
+<li>条件渲染（使用 <code>v-if</code> ）</li>
+<li>条件展示（使用 <code>v-show</code> ）</li>
+<li>动态组件</li>
+<li>组件根节点</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"show = !show"</span>&gt;</span></div><div class="line">    Toggle</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"fade"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.fade-enter-active</span>, <span class="selector-class">.fade-leave-active</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: opacity .<span class="number">5s</span></div><div class="line">&#125;</div><div class="line"><span class="selector-class">.fade-enter</span>, <span class="selector-class">.fade-leave-to</span> <span class="comment">/* .fade-leave-active in below version 2.1.8 */</span> &#123;</div><div class="line">  <span class="attribute">opacity</span>: <span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当插入或删除包含在 <code>transition</code> 组件中的元素时，Vue 将会做以下处理：</p>
+<ol>
+<li><p>自动嗅探目标元素是否应用了 CSS 过渡或动画，如果是，在恰当的时机添加/删除 CSS 类名。</p>
+</li>
+<li><p>如果过渡组件提供了 JavaScript 钩子函数，这些钩子函数将在恰当的时机被调用。</p>
+</li>
+<li><p>如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作（插入/删除）在下一帧中立即执行。（注意：此指浏览器逐帧动画机制，和 Vue 的 <code>nextTick</code> 概念不一样）</p>
+</li>
+</ol>
+<h3 id="过渡的类名"><a href="#过渡的类名" class="headerlink" title="过渡的类名"></a>过渡的类名</h3><p>在进入/离开的过渡中，会有6个class切换。</p>
+<ol>
+<li><p><code>v-enter</code> ：定义进入过渡的开始状态。在元素被插入时生效，在下一个帧移除。</p>
+</li>
+<li><p><code>v-enter-active</code> : 定义过渡的状态。在元素整个过渡过程中作用，在元素被插入时生效，在 <code>transition/animation</code> 完成后移除。这个类可以被用来定义过渡的过程时间，延迟和曲线函数。</p>
+</li>
+<li><p><code>v-enter-to</code> ：2.1.8版以上定义进入过渡的结束状态。在元素被插入一帧后生效（于此同时 <code>v-enter</code> 被删除），在 <code>transition/animation</code> 完成之后移除。</p>
+</li>
+<li><p><code>v-leave</code> : 定义离开过渡的开始状态。在离开过渡被触发时生效，在下一个帧移除。</p>
+</li>
+<li><p><code>v-leave-active</code> ：定义过渡的状态。在元素整个过程中作用，在离开过渡被触发后立即生效，在 <code>transition/animation</code> 完成之后移除。这个类可以被用来定义过渡的过程时间，延迟和曲线函数。</p>
+</li>
+<li><p><code>v-leave-to</code> ：2.1.8版及以上定义离开过渡的结束状态。在离开过渡被触发一帧后生效（于此同时 <code>v-leave</code> 被删除），在 <code>transition/animation</code> 完成之后移除。</p>
+</li>
+</ol>
+<p>对于这些在 <code>enter/leave</code> 过渡中切换的类名，<code>v-</code> 是这些类名的前缀。使用 <code>&lt;transition name=&quot;my-transition&quot;&gt;</code> 可以重置前缀，比如 <code>v-enter</code> 替换为 <code>my-transition-enter</code>。</p>
+<h3 id="CSS-过渡"><a href="#CSS-过渡" class="headerlink" title="CSS 过渡"></a>CSS 过渡</h3><p>常用的过渡都是使用 CSS 过渡。</p>
+<p>下面是一个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example-1"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"show = !show"</span>&gt;</span></div><div class="line">    Toggle render</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"slide-fade"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-1'</span></div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* 可以设置不同的进入和离开动画 */</span></div><div class="line"><span class="comment">/* 设置持续时间和动画函数 */</span></div><div class="line"><span class="selector-class">.slide-fade-enter-active</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: all .<span class="number">3s</span> ease;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.slide-fade-leave-active</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: all .<span class="number">8s</span> <span class="built_in">cubic-bezier</span>(1.0, 0.5, 0.8, 1.0);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.slide-fade-enter</span>, <span class="selector-class">.slide-fade-leave-to</span></div><div class="line"><span class="comment">/* .slide-fade-leave-active for below version 2.1.8 */</span> &#123;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateX</span>(10px);</div><div class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="CSS-动画"><a href="#CSS-动画" class="headerlink" title="CSS 动画"></a>CSS 动画</h3><p>CSS 动画用法同 CSS 过渡区别是在动画中 <code>v-enter</code> 类名在节点插入 DOM 后不会立即删除，而是在 <code>animationend</code> 事件触发时删除。</p>
+<p>示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example-2"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"show = !show"</span>&gt;</span>Toggle show<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"bounce"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>Look at me!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-2'</span>,</div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.bounce-enter-active</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: bounce-in .<span class="number">5s</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.bounce-leave-active</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: bounce-in .<span class="number">5s</span> reverse;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> bounce-in &#123;</div><div class="line">  0% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(0);</div><div class="line">  &#125;</div><div class="line">  50% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1.5);</div><div class="line">  &#125;</div><div class="line">  100% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="自定义过渡的类名"><a href="#自定义过渡的类名" class="headerlink" title="自定义过渡的类名"></a>自定义过渡的类名</h3><p>我们可以通过以下特性来自定义过渡类名：</p>
+<ul>
+<li><code>enter-class</code></li>
+<li><code>enter-active-class</code></li>
+<li><code>enter-to-class</code> (2.1.8+)</li>
+<li><code>leave-class</code></li>
+<li><code>leave-active-class</code></li>
+<li><code>leave-to-class</code> (2.1.8+)</li>
+</ul>
+<p>它们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css 结合使用十分有用。</p>
+<p>示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"https://cdn.jsdelivr.net/npm/animate.css@3.5.1"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example-3"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"show = !show"</span>&gt;</span></div><div class="line">    Toggle render</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span></span></div><div class="line"><span class="tag">    <span class="attr">name</span>=<span class="string">"custom-classes-transition"</span></span></div><div class="line"><span class="tag">    <span class="attr">enter-active-class</span>=<span class="string">"animated tada"</span></span></div><div class="line"><span class="tag">    <span class="attr">leave-active-class</span>=<span class="string">"animated bounceOutRight"</span></span></div><div class="line"><span class="tag">  &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-3'</span>,</div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="同时使用过渡和动画"><a href="#同时使用过渡和动画" class="headerlink" title="同时使用过渡和动画"></a>同时使用过渡和动画</h3><p>Vue 为了知道过渡的完成，必须设置相应的事件监听器。它可以是 <code>transitionend</code> 或 <code>animationend</code> ，这取决于给元素应用的 CSS 规则。如果你使用其中任何一种，Vue 能自动识别类型并设置监听。</p>
+<p>但是，在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 <code>animation</code> 很快的被触发并完成了，而 <code>transition</code> 效果还没结束。在这种情况中，你就需要使用 <code>type</code> 特性并设置 <code>animation</code> 或 <code>transition</code> 来明确声明你需要 Vue 监听的类型。</p>
+<h3 id="显性的过渡持续时间"><a href="#显性的过渡持续时间" class="headerlink" title="显性的过渡持续时间"></a>显性的过渡持续时间</h3><p>在很多情况下，Vue 可以自动得出过渡效果的完成时机。默认情况下，Vue 会等待其在过渡效果的根元素的第一个 <code>transitionend</code> 或 <code>animationend</code> 事件。然而也可以不这样设定–比如，我们可以拥有一个精心编排的一序列过渡效果，其中一些嵌套的内部元素相比于过渡效果的根元素有延迟的或更长的过渡效果。</p>
+<p>在这种情况下你可以用 <code>&lt;transition&gt;</code> 组件上的 <code>duration</code> 属性定制一个显性的过渡持续时间（以毫秒计）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">:duration</span>=<span class="string">"1000"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>你也可以定制进入和移出的持续时间：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">:duration</span>=<span class="string">"&#123; enter: 500, leave: 800 &#125;"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="JavaScript-钩子"><a href="#JavaScript-钩子" class="headerlink" title="JavaScript 钩子"></a>JavaScript 钩子</h3><p>可以在属性中声明 JavaScript 钩子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:before-enter</span>=<span class="string">"beforeEnter"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:enter</span>=<span class="string">"enter"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:after-enter</span>=<span class="string">"afterEnter"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:enter-cancelled</span>=<span class="string">"enterCancelled"</span></span></div><div class="line"><span class="tag">  </span></div><div class="line"><span class="tag">  <span class="attr">v-on:before-leave</span>=<span class="string">"beforeLeave"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:leave</span>=<span class="string">"leave"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:after-leave</span>=<span class="string">"afterLeave"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:leave-cancelled</span>=<span class="string">"leaveCancelled"</span></span></div><div class="line"><span class="tag">&gt;</span></div><div class="line">  <span class="comment">&lt;!-- ... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line">methods: &#123;</div><div class="line">  <span class="comment">// ------</span></div><div class="line">  <span class="comment">// 进入中</span></div><div class="line">  <span class="comment">// ------</span></div><div class="line"></div><div class="line">  beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// 此回调函数是可选项的设置</span></div><div class="line">  <span class="comment">// 与 CSS 结合时使用</span></div><div class="line">  enter: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    done()</div><div class="line">  &#125;,</div><div class="line">  afterEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  enterCancelled: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="comment">// ------</span></div><div class="line">  <span class="comment">// 离开时</span></div><div class="line">  <span class="comment">// ------</span></div><div class="line"></div><div class="line">  beforeLeave: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// 此回调函数是可选项的设置</span></div><div class="line">  <span class="comment">// 与 CSS 结合时使用</span></div><div class="line">  leave: <span class="function"><span class="keyword">function</span> (<span class="params">el,done</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    done()</div><div class="line">  &#125;,</div><div class="line">  afterLeave: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// leaveCancelled 只用于 v-show 中</span></div><div class="line">  leaveCancelled: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这些钩子函数既可以结合 CSS <code>transitions/animations</code> 使用，也可以单独使用。</p>
+<p><strong>NOTE:</strong>当只用 JavaScript 过渡的时候，在 <code>enter</code> 和 <code>leave</code> 中，回调函数 <code>done</code> 是必须的。否则，它们会被同步调用，过渡会立即完成。</p>
+<p><strong>NOTE:</strong>推荐对于仅使用 JavaScript 过渡的元素添加 <code>v-bind:css=&quot;fasle&quot;</code> ，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。</p>
+<p>一个使用 Velocity.js 的简单例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--</span></div><div class="line"><span class="comment">Velocity works very much like jQuery.animate and is</span></div><div class="line"><span class="comment">a great option for JavaScript animations</span></div><div class="line"><span class="comment">--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example-4"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"show = !show"</span>&gt;</span></div><div class="line">    Toggle</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:before-enter</span>=<span class="string">"beforeEnter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:enter</span>=<span class="string">"enter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:leave</span>=<span class="string">"leave"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-bind:css</span>=<span class="string">"false"</span></span></div><div class="line"><span class="tag">  &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span></div><div class="line">      Demo</div><div class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#example-4'</span>,</div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">false</span></div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">      el.style.opacity = <span class="number">0</span></div><div class="line">      el.style.transformOrigin = <span class="string">'left'</span></div><div class="line">    &#125;,</div><div class="line">    enter: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">      Velocity(el, &#123; <span class="attr">opacity</span>: <span class="number">1</span>, <span class="attr">fontSize</span>: <span class="string">'1.4em'</span> &#125;, &#123; <span class="attr">duration</span>: <span class="number">300</span> &#125;)</div><div class="line">      Velocity(el, &#123; <span class="attr">fontsize</span>: <span class="string">'1em'</span> &#125;, &#123; <span class="attr">complete</span>: done &#125;)</div><div class="line">    &#125;,</div><div class="line">    leave: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">      Velocity(el, &#123; <span class="attr">translateX</span>: <span class="string">'15px'</span>, <span class="attr">rotateZ</span>: <span class="string">'50deg'</span> &#125;, &#123; <span class="attr">duration</span>: <span class="number">600</span> &#125;)</div><div class="line">      Velocity(el, &#123; <span class="attr">rotateZ</span>: <span class="string">'100deg'</span> &#125;, &#123; <span class="attr">loop</span>: <span class="number">2</span> &#125;)</div><div class="line">      Velocity(el, &#123;</div><div class="line">        rotateZ: <span class="string">'45deg'</span>,</div><div class="line">        translateY: <span class="string">'30px'</span>,</div><div class="line">        translateX: <span class="string">'30px'</span>,</div><div class="line">        opacity: <span class="number">0</span></div><div class="line">      &#125;, &#123; <span class="attr">complete</span>: done &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="初始渲染的过渡"><a href="#初始渲染的过渡" class="headerlink" title="初始渲染的过渡"></a>初始渲染的过渡</h2><p>可以通过 <code>appear</code> 特性设置节点的初始渲染的过渡</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">appear</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- ... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这里默认和进入和离开过渡一样，同样也可以自定义 CSS 类名。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  appear</div><div class="line">  appear-class="custom-appear-class"</div><div class="line">  appear-to-class="custom-appear-to-class" (2.1.8+)</div><div class="line">  appear-active-class="custom-appear-active-class"</div><div class="line">&gt;</div><div class="line">  <span class="comment">&lt;!-- ... --&gt;</span></div></pre></td></tr></table></figure>
+<p>自定义 JavaScript 钩子：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span></span></div><div class="line"><span class="tag">  <span class="attr">appear</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:before-appear</span>=<span class="string">"customBeforeAppearHook"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:appear</span>=<span class="string">"customAppearHook"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:after-appear</span>=<span class="string">"customAfterAppearHook"</span></span></div><div class="line"><span class="tag">  <span class="attr">v-on:appear-cancelled</span>=<span class="string">"customAppearCancelledHook"</span></span></div><div class="line"><span class="tag">&gt;</span></div><div class="line">  <span class="comment">&lt;!-- ... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="多个元素的过渡"><a href="#多个元素的过渡" class="headerlink" title="多个元素的过渡"></a>多个元素的过渡</h2><p>对于原生标签可以使用 <code>v-if / v-else</code> 。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">table</span> <span class="attr">v-if</span>=<span class="string">"items.length &gt; 0"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- ... --&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else</span>&gt;</span>Sorry, no items found.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tansition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>NOTE:</strong>当有相同标签名的元素切换时，需要通过 <code>key</code> 特性设置唯一的值来标记让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。即使在技术上没有必要，给在 <code>&lt;tansition&gt;</code> 组件中的多个元素设置 key 是一个更好的实践。</p>
+<p>示例：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-if</span>=<span class="string">"isEditing"</span> <span class="attr">key</span>=<span class="string">"save"</span>&gt;</span></div><div class="line">    Save</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-else</span> <span class="attr">key</span>=<span class="string">"edit"</span>&gt;</span></div><div class="line">    Edit</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在一些场景中，也可以通过给同一个元素的 <code>key</code> 特性设置不同的状态来代替 <code>v-if</code> 和 <code>v-else</code> ，上面的例子可以重写为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-bind:key</span>=<span class="string">"isEditing"</span>&gt;</span></div><div class="line">    &#123;&#123; isEditing ? 'Save' : 'Edit' &#125;&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>使用多个 <code>v-if</code> 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-if</span>=<span class="string">"docState === 'saved'"</span> <span class="attr">key</span>=<span class="string">"saved"</span>&gt;</span></div><div class="line">    Edit</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-if</span>=<span class="string">"docState === 'edited'"</span> <span class="attr">key</span>=<span class="string">"edited"</span>&gt;</span></div><div class="line">    Save</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-if</span>=<span class="string">"docState === 'editing'"</span> <span class="attr">key</span>=<span class="string">"editing"</span>&gt;</span></div><div class="line">    Cancel</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>可以重写为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-bind:key</span>=<span class="string">"docState"</span>&gt;</span></div><div class="line">    &#123;&#123; buttonMessage &#125;&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transiton</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line">computed: &#123;</div><div class="line">  buttonMessage: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (<span class="keyword">this</span>.docState) &#123;</div><div class="line">      <span class="keyword">case</span> <span class="string">'saved'</span>: <span class="keyword">return</span> <span class="string">'Edit'</span></div><div class="line">      <span class="keyword">case</span> <span class="string">'edited'</span>: <span class="keyword">return</span> <span class="string">'Save'</span></div><div class="line">      <span class="keyword">case</span> <span class="string">'editing'</span>: <span class="keyword">return</span> <span class="string">'Cancel'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="过渡模式"><a href="#过渡模式" class="headerlink" title="过渡模式"></a>过渡模式</h3><p>由于 <code>&lt;transition&gt;</code> 的默认行为-进入过渡和离开过渡同时发生-不能满足所以要求，所以 Vue 提供了过渡模式。</p>
+<ul>
+<li><code>in-out</code> ：新元素先进行过渡，完成之后当前元素过渡离开。</li>
+<li><code>out-in</code> ：当前元素先进行过渡，完成之后新元素过渡进入。</li>
+</ul>
+<p>用 <code>out-in</code> 重写之前的开关按钮过渡：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"fade"</span> <span class="attr">mode</span>=<span class="string">"out-in"</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- ... the buttons ... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="多个组件的过渡"><a href="#多个组件的过渡" class="headerlink" title="多个组件的过渡"></a>多个组件的过渡</h2><p>多个组件的过渡简单很多–我们不需要使用 <code>key</code> 特性。相反，我们只需要使用动态组件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"component-fade"</span> <span class="attr">mode</span>=<span class="string">"out-in"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">component</span> <span class="attr">v-bind:is</span>=<span class="string">"view"</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#transition-components-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    view: <span class="string">'v-a'</span></div><div class="line">  &#125;,</div><div class="line">  components: &#123;</div><div class="line">    <span class="string">'v-a'</span>: &#123;</div><div class="line">      template: <span class="string">'&lt;div&gt;Component A&lt;/div&gt;'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'v-b'</span>: &#123;</div><div class="line">      template: <span class="string">'&lt;div&gt;Component B&lt;/div&gt;'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.component-fade-enter-active</span>, <span class="selector-class">.component-fade-leave-active</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: opacity .<span class="number">3s</span> ease;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.component-fade-enter</span>, <span class="selector-class">.component-fade-leave-to</span> &#123;</div><div class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="列表过渡"><a href="#列表过渡" class="headerlink" title="列表过渡"></a>列表过渡</h2><p><code>&lt;transition-group&gt;</code> 的几个特点：</p>
+<ul>
+<li>不同于 <code>&lt;transition&gt;</code> ，它会以一个真实元素呈现：默认为一个 <code>&lt;span&gt;</code> 。你也可以通过 <code>tag</code> 特性更换为其他元素。</li>
+<li>内部元素总是需要提供唯一的 <code>key</code> 属性值。</li>
+</ul>
+<h3 id="列表的进入-离开过渡"><a href="#列表的进入-离开过渡" class="headerlink" title="列表的进入/离开过渡"></a>列表的进入/离开过渡</h3><p>由一个简单的例子深入，进入和离开的过渡使用之前一样的 CSS 类名。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"list-demo"</span> <span class="attr">class</span>=<span class="string">"demo"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"add"</span>&gt;</span>Add<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">""</span><span class="attr">remove</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition-group</span> <span class="attr">name</span>=<span class="string">"list"</span> <span class="attr">tag</span>=<span class="string">"p"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-for</span>=<span class="string">"item in items"</span> <span class="attr">v-bind:key</span>=<span class="string">"item"</span> <span class="attr">class</span>=<span class="string">"list-item"</span>&gt;</span></div><div class="line">      &#123;&#123; item &#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition-group</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#list-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>],</div><div class="line">    nextNum: <span class="number">10</span></div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    randomIndex: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="keyword">this</span>.items.length) <span class="comment">// Math.random()取0~1之间的随机数</span></div><div class="line">    &#125;,</div><div class="line">    add: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items.splice(<span class="keyword">this</span>.randomIndex(), <span class="number">0</span>, <span class="keyword">this</span>.nestNum++)</div><div class="line">    &#125;,</div><div class="line">    remove: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items.splice(<span class="keyword">this</span>.randomIndex(), <span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list-item</span> &#123;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">  <span class="attribute">margin-right</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.list-enter-active</span>, <span class="selector-class">.list-leave-active</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: all <span class="number">1s</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.list-enter</span>, <span class="selector-class">.list-leave-to</span> &#123;</div><div class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(30px);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个例子有个问题，当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡，我们下面会解决这个问题。</p>
+<h3 id="列表的排序过渡"><a href="#列表的排序过渡" class="headerlink" title="列表的排序过渡"></a>列表的排序过渡</h3><p><code>&lt;transition-group&gt;</code> 组件还有一个特殊之处。不仅可以进入和离开动画，还可以改变定位。要使用这个新功能只需要了解新增的 <code>v-move</code> 特性，它会在元素的改变定位的过程中应用。像之前的类名一样，可以用过 <code>name</code>属性自定义前缀，也可以通过 <code>move-class</code> 属性手动设置。</p>
+<p><code>v-move</code> 对于设置过渡的切换时机和过渡曲线非常有用，例子如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"flip-list-demo"</span> <span class="attr">class</span>=<span class="string">"demo"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"shuffle"</span>&gt;</span>Shuffle<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition-group</span> <span class="attr">name</span>=<span class="string">"flip-list"</span> <span class="attr">tag</span>=<span class="string">"ul"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item in items"</span> <span class="attr">v-bind:key</span>=<span class="string">"item"</span>&gt;</span></div><div class="line">      &#123;&#123; item &#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition-group</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#flip-list-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    shuffle: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items= _.shuffle(<span class="keyword">this</span>.items)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.flip-list-move</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: transform <span class="number">1s</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>内部的实现，Vue 使用了一个叫 FLIP 简单的动画队列使用 transforms 将元素从之前的位置平滑过渡新的位置。</p>
+<p>我们将之前的例子和这个技术结合，使我们列表的一切变动都会有动画过渡。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"list-complete-demo"</span> <span class="attr">class</span>=<span class="string">"demo"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"shuffle"</span>&gt;</span>Shuffle<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"add"</span>&gt;</span>Add<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"Remove"</span>&gt;</span>Remove<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition-group</span> <span class="attr">name</span>=<span class="string">"list-complete"</span> <span class="attr">tag</span>=<span class="string">"p"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">span</span></span></div><div class="line"><span class="tag">      <span class="attr">v-for</span>=<span class="string">"item in items"</span></span></div><div class="line"><span class="tag">      <span class="attr">v-bing:key</span>=<span class="string">"item"</span></span></div><div class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">"list-complete-item"</span></span></div><div class="line"><span class="tag">    &gt;</span></div><div class="line">      &#123;&#123; item &#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition-group</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#list-compplete-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    items: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>],</div><div class="line">    nextNum: <span class="number">10</span></div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    randomIndex: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="keyword">this</span>.items.length)</div><div class="line">    &#125;,</div><div class="line">    add: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items.splice(<span class="keyword">this</span>.randomIndex, <span class="number">0</span>, <span class="keyword">this</span>.nextNum++)</div><div class="line">    &#125;,</div><div class="line">    remove: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items.splice(<span class="keyword">this</span>.randomIndex(), <span class="number">1</span>)</div><div class="line">    &#125;,</div><div class="line">    shuffle: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">this</span>.items = _.shuffle(<span class="keyword">this</span>.items)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list-complete-item</span> &#123;</div><div class="line">  <span class="attribute">transition</span>: all <span class="number">1s</span>;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">  <span class="attribute">margin-right</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.list-complete-enter</span>, <span class="selector-class">.list-complete-leave-to</span> &#123;</div><div class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;  <span class="comment">/* 规定不透明度。从 0.0 （完全透明）到 1.0（完全不透明）。*/</span></div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(30px)</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.list-complete-leave-active</span> &#123;</div><div class="line">  <span class="attribute">postion</span>: absolute;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="列表的交错过渡"><a href="#列表的交错过渡" class="headerlink" title="列表的交错过渡"></a>列表的交错过渡</h3><p>通过 data 属性与 JavaScript 通信，就可以实现列表的交错过渡：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"staggered-list-demo"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"query"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition-group</span></span></div><div class="line"><span class="tag">    <span class="attr">name</span>=<span class="string">"staggered-fade"</span></span></div><div class="line"><span class="tag">    <span class="attr">tag</span>=<span class="string">"ul"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-bind:css</span>=<span class="string">"false"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:before-enter</span>=<span class="string">"beforeEnter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:enter</span>=<span class="string">"enter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:leave</span>=<span class="string">"leave"</span></span></div><div class="line"><span class="tag">  &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span></span></div><div class="line"><span class="tag">      <span class="attr">v-for</span>=<span class="string">"(item, index) in computedList"</span></span></div><div class="line"><span class="tag">      <span class="attr">v-bind:key</span>=<span class="string">"item.msg"</span></span></div><div class="line"><span class="tag">      <span class="attr">v-bind:data-index</span>=<span class="string">"index"</span></span></div><div class="line"><span class="tag">    &gt;</span>&#123;&#123; item.msg &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition-group</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#staggered-list-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    query: <span class="string">''</span>,</div><div class="line">    list: [</div><div class="line">      &#123; <span class="attr">msg</span>: <span class="string">'Bruce Lee'</span> &#125;,</div><div class="line">      &#123; <span class="attr">msg</span>: <span class="string">'Jackie Chan'</span> &#125;,</div><div class="line">      &#123; <span class="attr">msg</span>: <span class="string">'Chuck Norris'</span> &#125;,</div><div class="line">      &#123; <span class="attr">msg</span>: <span class="string">'Jet Li'</span> &#125;,</div><div class="line">      &#123; <span class="attr">msg</span>: <span class="string">'Kung Fury'</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  computed: &#123;</div><div class="line">    computedList: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> vm = <span class="keyword">this</span></div><div class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.list.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> items.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== <span class="number">-1</span></div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">      el.style.opacity = <span class="number">0</span></div><div class="line">      el.style.height = <span class="number">0</span></div><div class="line">    &#125;,</div><div class="line">    enter: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> delay = el.dataset.index * <span class="number">150</span></div><div class="line">      setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        Velocity(</div><div class="line">          el,</div><div class="line">          &#123; <span class="attr">opacity</span>: <span class="number">0</span>, <span class="attr">height</span>: <span class="number">0</span> &#125;,</div><div class="line">          &#123; <span class="attr">complete</span>: done &#125;</div><div class="line">        )</div><div class="line">      &#125;, delay)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="可复用的过渡"><a href="#可复用的过渡" class="headerlink" title="可复用的过渡"></a>可复用的过渡</h2><p>过渡可以通过 Vue 的组件系统实现复用。要创建一个可复用过渡组件，你需要做的就是将 <code>&lt;transition&gt;</code> 或者 <code>&lt;transition-group&gt;</code> 作为根组件，然后将任何子组件放置在其中就可以了。</p>
+<p>使用 template 的简单例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'my-special-transition'</span>, &#123;</div><div class="line">  template: <span class="string">'\</span></div><div class="line"><span class="string">    &lt;transition\</span></div><div class="line"><span class="string">      name="very-special-transition"\</span></div><div class="line"><span class="string">      mode="out-in"\</span></div><div class="line"><span class="string">      v-on:before-enter="beforeEnter"\</span></div><div class="line"><span class="string">      v-on:after-enter="afterEnter"\</span></div><div class="line"><span class="string">    &gt;\</span></div><div class="line"><span class="string">      &lt;slot&gt;&lt;/slot&gt;\</span></div><div class="line"><span class="string">    &lt;/transition&gt;\</span></div><div class="line"><span class="string">  '</span>,</div><div class="line">  methods: &#123;</div><div class="line">    beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">      <span class="comment">// ...</span></div><div class="line">    &#125;,</div><div class="line">    afterEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">      <span class="comment">// ...</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>函数组件更适合完成这个任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'my-special-transition'</span>, &#123;</div><div class="line">  functional: <span class="literal">true</span>,</div><div class="line">  render: <span class="function"><span class="keyword">function</span> (<span class="params">createElement, context</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> data = &#123;</div><div class="line">      props: &#123;</div><div class="line">        name: <span class="string">'very-special-transition'</span>,</div><div class="line">        mode: <span class="string">'out-in'</span></div><div class="line">      &#125;,</div><div class="line">      on: &#123;</div><div class="line">        beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">          <span class="comment">// ...</span></div><div class="line">        &#125;,</div><div class="line">        afterEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">          <span class="comment">// ...</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> createElement(<span class="string">'transition'</span>, data, context.children)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="动态过渡"><a href="#动态过渡" class="headerlink" title="动态过渡"></a>动态过渡</h2><p>在 Vue 中即使是过渡也是数据驱动的，动态过渡最基本的例子是通过 <code>name</code> 特性来绑定动态值。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">transition</span> <span class="attr">v-bind:name</span>=<span class="string">"transitionName"</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- ... --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当你想用 Vue 的过渡系统来定义的 CSS 过渡/动画 在不同过渡间切换会非常有用。</p>
+<p>所有的过渡特性都是动态绑定。它不仅是简单的特性，通过事件的钩子函数方法，可以在获取到相应上下文数据。这意味着，可以根据组件的状态通过 JavaScript 过渡设置不同的过渡效果。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span>  <span class="attr">id</span>=<span class="string">"dynamic-fade-demo"</span> <span class="attr">class</span>=<span class="string">"demo"</span>&gt;</span></div><div class="line">  Fade In: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">v-model</span>=<span class="string">"fadeInDuraation"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">v-bind:max</span>=<span class="string">"maxFadeDuration"</span>&gt;</span></div><div class="line">  Fade Out: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">v-model</span>=<span class="string">"fadeOutDuration"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">v-bind:max</span>=<span class="string">"maxFadeDuration"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">transition</span></span></div><div class="line"><span class="tag">    <span class="attr">v-bind:css</span>=<span class="string">"fasle"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:before-enter</span>=<span class="string">"beforeEnter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:enter</span>=<span class="string">"enter"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:leave</span>=<span class="string">"leave"</span></span></div><div class="line"><span class="tag">  &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span></span></div><div class="line"><span class="tag">    <span class="attr">v-if</span>=<span class="string">"stop"</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:click</span>=<span class="string">"stop = false; show = false"</span></span></div><div class="line"><span class="tag">  &gt;</span>Start animating<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span></span></div><div class="line"><span class="tag">    <span class="attr">v-else</span></span></div><div class="line"><span class="tag">    <span class="attr">v-on:click</span>=<span class="string">"stop = true"</span></span></div><div class="line"><span class="tag">  &gt;</span>Stop it!<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  el: <span class="string">'#dynamic-fade-demo'</span>,</div><div class="line">  data: &#123;</div><div class="line">    show: <span class="literal">true</span>,</div><div class="line">    fadeInDuration: <span class="number">1000</span>,</div><div class="line">    fadeOutDuration: <span class="number">1000</span>,</div><div class="line">    maxFadeDuration: <span class="number">1500</span>,</div><div class="line">    stop: <span class="literal">true</span></div><div class="line">  &#125;,</div><div class="line">  mounted: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.show = <span class="literal">false</span></div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    beforeEnter: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">      el.style.opacity = <span class="number">0</span></div><div class="line">    &#125;,</div><div class="line">    enter: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> vm = <span class="keyword">this</span></div><div class="line">      Velocity(el,</div><div class="line">        &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;,</div><div class="line">        &#123;</div><div class="line">          duration: <span class="keyword">this</span>.fadeInDuration,</div><div class="line">          complete: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            done()</div><div class="line">            <span class="keyword">if</span> (!vm.stop) vm.show = <span class="literal">false</span></div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      )</div><div class="line">    &#125;,</div><div class="line">    leave: <span class="function"><span class="keyword">function</span> (<span class="params">el, done</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> vm = <span class="keyword">this</span></div><div class="line">      Velocity(el,</div><div class="line">        &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;,</div><div class="line">        &#123;</div><div class="line">          duration: <span class="keyword">this</span>.fadeOutDuration,</div><div class="line">          complete: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            done()</div><div class="line">            vm.show = <span class="literal">true</span></div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      )</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+    </div>
+      
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag"><i class="fa fa-tag"></i> Vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/Vue.js学习笔记7/" rel="next" title="Vue.js学习笔记7">
+                <i class="fa fa-chevron-left"></i> Vue.js学习笔记7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/22/Vue.js学习笔记9/" rel="prev" title="Vue.js学习笔记9">
+                Vue.js学习笔记9 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display:none"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="胡国康" />
+            
+              <p class="site-author-name" itemprop="name">胡国康</p>
+              <p class="site-description motion-element" itemprop="description">天道酬勤，功不唐捐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/HGKcoding" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:huguokang2017@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进入-离开-amp-列表过渡"><span class="nav-number">1.</span> <span class="nav-text">进入/离开 & 列表过渡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元素-组件的过渡"><span class="nav-number">1.2.</span> <span class="nav-text">单元素/组件的过渡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过渡的类名"><span class="nav-number">1.2.1.</span> <span class="nav-text">过渡的类名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-过渡"><span class="nav-number">1.2.2.</span> <span class="nav-text">CSS 过渡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-动画"><span class="nav-number">1.2.3.</span> <span class="nav-text">CSS 动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义过渡的类名"><span class="nav-number">1.2.4.</span> <span class="nav-text">自定义过渡的类名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时使用过渡和动画"><span class="nav-number">1.2.5.</span> <span class="nav-text">同时使用过渡和动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显性的过渡持续时间"><span class="nav-number">1.2.6.</span> <span class="nav-text">显性的过渡持续时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-钩子"><span class="nav-number">1.2.7.</span> <span class="nav-text">JavaScript 钩子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始渲染的过渡"><span class="nav-number">1.3.</span> <span class="nav-text">初始渲染的过渡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个元素的过渡"><span class="nav-number">1.4.</span> <span class="nav-text">多个元素的过渡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过渡模式"><span class="nav-number">1.4.1.</span> <span class="nav-text">过渡模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个组件的过渡"><span class="nav-number">1.5.</span> <span class="nav-text">多个组件的过渡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表过渡"><span class="nav-number">1.6.</span> <span class="nav-text">列表过渡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#列表的进入-离开过渡"><span class="nav-number">1.6.1.</span> <span class="nav-text">列表的进入/离开过渡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表的排序过渡"><span class="nav-number">1.6.2.</span> <span class="nav-text">列表的排序过渡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表的交错过渡"><span class="nav-number">1.6.3.</span> <span class="nav-text">列表的交错过渡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可复用的过渡"><span class="nav-number">1.7.</span> <span class="nav-text">可复用的过渡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态过渡"><span class="nav-number">1.8.</span> <span class="nav-text">动态过渡</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">胡国康</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'HGKcoding',
+            repo: 'hgkcoding.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '630ce61d9fd8fe4d43abee91042595716d7ae13a',
+            
+                client_id: 'ffde74160740b52d23ce'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("CMPBrwQPQa4bBzeRVURNvVUn-gzGzoHsz", "dhQWaPLPiiDimvHUJziHbGpX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
