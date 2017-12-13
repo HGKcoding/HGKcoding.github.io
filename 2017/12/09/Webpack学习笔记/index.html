@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Two:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Webpack3.0," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hu Guokang's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言随着 Vue.js 的学习，webpack 已然是必须要掌握的工具。目前，webpack 版本更新到 v3.10.0 了，相比以前应该是优化并成熟了很多。webpack中文官网上有详细的文档，这篇文章作为我的学习笔记，就大概地记录下重要的知识点。详细配置">
+<meta name="keywords" content="Webpack3.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack学习笔记">
+<meta property="og:url" content="http://huguokang.com/2017/12/09/Webpack学习笔记/index.html">
+<meta property="og:site_name" content="Hu Guokang&#39;s Blog">
+<meta property="og:description" content="前言随着 Vue.js 的学习，webpack 已然是必须要掌握的工具。目前，webpack 版本更新到 v3.10.0 了，相比以前应该是优化并成熟了很多。webpack中文官网上有详细的文档，这篇文章作为我的学习笔记，就大概地记录下重要的知识点。详细配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-13T08:02:43.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webpack学习笔记">
+<meta name="twitter:description" content="前言随着 Vue.js 的学习，webpack 已然是必须要掌握的工具。目前，webpack 版本更新到 v3.10.0 了，相比以前应该是优化并成熟了很多。webpack中文官网上有详细的文档，这篇文章作为我的学习笔记，就大概地记录下重要的知识点。详细配置">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huguokang.com/2017/12/09/Webpack学习笔记/"/>
+
+
+
+
+
+  <title>Webpack学习笔记 | Hu Guokang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c2147fd775c1737e1dd8be6d981dabf5";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hu Guokang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Stupid is as stupid does.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huguokang.com/2017/12/09/Webpack学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="胡国康">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu Guokang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Webpack学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-09T08:57:58+08:00">
+                2017-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/09/Webpack学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/12/09/Webpack学习笔记/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/09/Webpack学习笔记/" class="leancloud_visitors" data-flag-title="Webpack学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">字数统计:</span>
+           <span class="post-count">4,211(字)</span>
+           
+          </span>
+	  
+          <span class="post-time">
+	         &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+          </span>
+          <span class="post-meta-item-text">阅读时长:</span>
+           <span class="post-count">18(分)</span>
+           
+          </span>
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随着 Vue.js 的学习，webpack 已然是必须要掌握的工具。目前，webpack 版本更新到 <code>v3.10.0</code> 了，相比以前应该是优化并成熟了很多。<a href="https://doc.webpack-china.org" target="_blank" rel="external">webpack中文官网</a>上有详细的文档，这篇文章作为我的学习笔记，就大概地记录下重要的知识点。<br><a href="https://doc.webpack-china.org/configuration" target="_blank" rel="external">详细配置</a></p>
+<a id="more"></a>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>官方文档的描述：</strong>本质上，webpack 是一个现代 JavaScript 应用程序的模块打包器(module bundler)。当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle。</p>
+<p>webpack 有四个核心概念：<br></p>
+<ul>
+<li>入口(entry)<br></li>
+<li>输出(output)<br></li>
+<li>loader<br></li>
+<li>插件(plugins)</li>
+</ul>
+<p>看上去还是比较简单的，下面一一描述。</p>
+<h2 id="入口起点-Entry-Point"><a href="#入口起点-Entry-Point" class="headerlink" title="入口起点(Entry Point)"></a>入口起点(Entry Point)</h2><p>首先 webpack 会从 webpack.config.js 这个文件中读取相关的配置信息，这也是我们配置各个属性的地方。</p>
+<p>配置 <code>entry</code> 属性有两种语法，单个入口（简写）语法和对象语法。</p>
+<p>单个入口（简写）语法：<code>entry: string|Array&lt;string&gt;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// entry 属性的单个入口语法</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// 上面是下面的简写</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    main: <span class="string">'./path/to/my/entry/file.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到这种语法还可以传入数组，传入文件路径数组将创建“多个主入口”。文档说：在你想要多个依赖文件一起注入，并将它们的依赖导向(graph)到一个”chunk”时很有用。</p>
+<p>对象语法：<code>entry: {[entryChunkName: string]: string|Array&lt;string&gt;}</code></p>
+<p>这种语法比较繁琐但是最可扩展。<br><br>“可扩展的 webpack 配置”是指，可重用并且可以和其它配置组合使用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 分离 应用程序 和 第三方库 入口</span></div><div class="line"><span class="comment">// 这种方式常见于，只有一个入口起点（不包括 vendor）的单页应用程序中</span></div><div class="line"><span class="comment">// 此设置允许你使用 CommonsChunkPlugin 从「应用程序 bundle」中提取 vendor 引用(vendor reference) 到 vendor bundle，并把引用 vendor 的部分替换为 __webpack_require__() 调用。如果应用程序 bundle 中没有 vendor 代码，那么你可以在 webpack 中实现被称为长效缓存的通用模式。</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    app: <span class="string">'./src/app.js'</span>,</div><div class="line">    vendors: <span class="string">'./src/vendors.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 多页面应用程序，页面跳转便获取新的 HTML 文档</span></div><div class="line"><span class="comment">// 每个 HTML 文档只使用一个入口起点。</span></div><div class="line"><span class="comment">// 使用 CommonsChunkPlugin 为每个页面间的应用程序共享代码创建 bundle</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    pageOne: <span class="string">'./src/pageOne/index.js'</span>,</div><div class="line">    pageTwo: <span class="string">'./src/pageTwo/index.js'</span>,</div><div class="line">    pageThree: <span class="string">'./src/pageThree/index.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="输出-output"><a href="#输出-output" class="headerlink" title="输出(output)"></a>输出(output)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// filename 用于输出文件的文件名</span></div><div class="line"><span class="comment">// path 目标输出目录的绝对路径</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">'bundle.js'</span>,</div><div class="line">    path: <span class="string">'/home/proj/public/assets'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 多个入口起点或者使用了像 CommonsChunkPlugin 这样的插件</span></div><div class="line">&#123;</div><div class="line">  entry: &#123;</div><div class="line">    app: <span class="string">'./src/app.js'</span>,</div><div class="line">    search: <span class="string">'./src/search.js'</span></div><div class="line">  &#125;,</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">'[name].js'</span>,</div><div class="line">    path: __dirname + <span class="string">'/dist'</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 写入到硬盘： ./dist/app.js, ./dist/search.js</span></div></pre></td></tr></table></figure>
+<h2 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h2><p>loader 用于对模块的源代码进行转换。</p>
+<p>首先要先安装对应的 loader ，比如安装 css-loader ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev css-loader</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 提示 webpack 对每个 .css 使用 css-loader</span></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    rules: [</div><div class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, <span class="attr">use</span>: <span class="string">'css-loader'</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// module.rules 允许在 webpack 配置中指定多个 loader</span></div><div class="line"><span class="built_in">module</span>: &#123;</div><div class="line">  rlues: [</div><div class="line">    &#123;</div><div class="line">      test: <span class="regexp">/\.css$/</span>,</div><div class="line">      use: [</div><div class="line">        &#123; <span class="attr">loader</span>: <span class="string">'style-loader'</span>&#125;,</div><div class="line">        &#123; </div><div class="line">          loader: <span class="string">'css-loader'</span>,</div><div class="line">          options: &#123;</div><div class="line">            modules: <span class="literal">true</span></div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="插件-Plugins"><a href="#插件-Plugins" class="headerlink" title="插件(Plugins)"></a>插件(Plugins)</h2><p>插件用于解决 loader 无法实现的事。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 由于插件可以携带参数/选项，你必须在 webpack 配置中，向 plugins 属性传入 new 实例。</span></div><div class="line"><span class="comment">// webpack 配置是标准的 Node.js CommonJS 模块，通过 require(...)导入其它文件或使用 npm 的工具函数</span></div><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">// 通过 npm 安装</span></div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">// 访问内置插件</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> config = &#123;</div><div class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span>,</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">  &#125;,</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    loaders: [               <span class="comment">// 为什么不是 rules ?</span></div><div class="line">      &#123;</div><div class="line">        test: <span class="regexp">/\.(js|jsx)$/</span>,</div><div class="line">        use: <span class="string">'babel-loader'</span></div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</div><div class="line">  ]</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = config;</div></pre></td></tr></table></figure>
+<p>到这里，四个核心概念都大概了解了，下面再学习其它方面。</p>
+<h2 id="模块-Modules"><a href="#模块-Modules" class="headerlink" title="模块(Modules)"></a>模块(Modules)</h2><p>在模块化编程中，开发者将程序分解成离散功能块(discrete chunks of functionality)，并称之为模块。</p>
+<p>webpack 模块的几个例子：<br></p>
+<ul>
+<li>ES2015 <code>import</code> 语句<br></li>
+<li>CommonJS <code>require()</code> 语句<br></li>
+<li>css/sass/less 文件中的 <code>@import</code> 语句<br></li>
+<li>样式(url(…))或 HTML 文件(<code>&lt;img src=...&gt;</code>)中的图片链接(image url)</li>
+</ul>
+<p>webpack 通过 loader 可以支持各种语言和预处理器编写模块。loader 描述了 webpack 如何处理 非 JavaScript(non-JavaScript) 模块，并且在bundle中引入这些依赖。</p>
+<h2 id="模块解析-Module-Resolution"><a href="#模块解析-Module-Resolution" class="headerlink" title="模块解析(Module Resolution)"></a>模块解析(Module Resolution)</h2><p>resolver 是一个用于帮助找到模块的绝对路径的第三方库(library)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一个模块可以作为另一个模块的依赖模块被引用</span></div><div class="line"><span class="comment">// 所依赖的模块可以是来自应用程序代码或第三方的库</span></div><div class="line"><span class="keyword">import</span> foo <span class="keyword">from</span> <span class="string">'path/to/module'</span></div><div class="line"><span class="comment">// 或者</span></div><div class="line"><span class="built_in">require</span>(<span class="string">'path/to/module'</span>)</div></pre></td></tr></table></figure>
+<p>resolver 帮助 webpack 找到 bundle 中需要引入的模块代码。当打包模块时，webpack 使用 enhanced-resolve 来解析文件路径。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 绝对路径</span></div><div class="line"><span class="keyword">import</span> <span class="string">"/home/me/file"</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"C:\\Users\\me\\file"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 相对路径</span></div><div class="line"><span class="comment">// 这种情况下，使用 import 或 require 的资源文件(resource file)所在的目录被认为是上下文目录。</span></div><div class="line"><span class="keyword">import</span> <span class="string">"../src/file1"</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"./file2"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 模块路径</span></div><div class="line"><span class="keyword">import</span> <span class="string">"module"</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"module/lib/file"</span>;</div></pre></td></tr></table></figure>
+<h2 id="依赖图-Dependency-Graph"><a href="#依赖图-Dependency-Graph" class="headerlink" title="依赖图(Dependency Graph)"></a>依赖图(Dependency Graph)</h2><p>任何时候，一个文件依赖于另一个文件，webpack 就把此视为文件之间有依赖关系。webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。 从这些入口起点开始，webpack 递归地构建一个依赖图，这个依赖图包含着应用程序所需的每个模块.</p>
+<h2 id="构建目标-Targets"><a href="#构建目标-Targets" class="headerlink" title="构建目标(Targets)"></a>构建目标(Targets)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 webpack 配置中设置 target 的值</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  target: <span class="string">'node'</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 多个 Target</span></div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> serverConfig = &#123;</div><div class="line">  target: <span class="string">'node'</span>,</div><div class="line">  output: &#123;</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    filename: <span class="string">'lib.node.js'</span></div><div class="line">  &#125;</div><div class="line">  <span class="comment">//…</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> clientConfig = &#123;</div><div class="line">  target: <span class="string">'web'</span>, <span class="comment">// &lt;=== 默认是 'web'，可省略</span></div><div class="line">  output: &#123;</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</div><div class="line">    filename: <span class="string">'lib.js'</span></div><div class="line">  &#125;</div><div class="line">  <span class="comment">//…</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = [ serverConfig, clientConfig ];</div></pre></td></tr></table></figure>
+<h2 id="Manifest"><a href="#Manifest" class="headerlink" title="Manifest"></a>Manifest</h2><h2 id="模块热替换-Hot-Module-Replacement"><a href="#模块热替换-Hot-Module-Replacement" class="headerlink" title="模块热替换(Hot Module Replacement)"></a>模块热替换(Hot Module Replacement)</h2><p>上面介绍了很多概念，下面的指南介绍项目中如何使用 webpack</p>
+<h1 id="指南"><a href="#指南" class="headerlink" title="指南"></a>指南</h1><h2 id="本地安装"><a href="#本地安装" class="headerlink" title="本地安装"></a>本地安装</h2><p>对于大多数项目，建议本地安装</p>
+<p>``shell<br>npm install –save-dev webpack<br>npm install –save-dev webpack@version<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">通常，webpack 通过运行一个或多个 npm scripts，会在本地 `node_modules` 目录中查找安装的 webpack：</div><div class="line"></div><div class="line">```json</div><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">  &quot;start&quot;: &quot;webpack --config webpack.config.js&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 package.json 添加一个 npm script 来代替 CLI 这种方式来运行本地的 webpack。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  "scripts": &#123;</div><div class="line">    "bulid": "webpack"</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在可以使用 <code>npm run build</code> 命令代替 较长的 CLI 命令(<code>./node_modules/.bin/webpack</code>) </p>
+<p>使用 npm 的 scripts，我们可以通过模块名来引用本地安装的 npm 包，而不是写出完整路径。</p>
+<h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>没什么东西，跟着创建了一个小项目，结构如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">webpack-demo</div><div class="line">|- package.json</div><div class="line">|- webpack.config.js</div><div class="line">|- /dist</div><div class="line">  |- bundle.js</div><div class="line">  |- index.html</div><div class="line">|- /src</div><div class="line">  |- index.js</div><div class="line">|- /node_modules</div></pre></td></tr></table></figure>
+<h2 id="管理资源"><a href="#管理资源" class="headerlink" title="管理资源"></a>管理资源</h2><p>在 src 目录下加入资源，webpack.config.js 中配置相应的 loader，在 index.js 中 先 import 再将资源引入到 index.html 中。</p>
+<h2 id="管理输出"><a href="#管理输出" class="headerlink" title="管理输出"></a>管理输出</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);<span class="comment">// 当修改 entry 时，不需要修改 index.html，这个插件会生成一个新的覆盖它</span></div><div class="line"><span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);<span class="comment">// 清理 /dist 文件夹</span></div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    app: <span class="string">'./src/index.js'</span>,</div><div class="line">    print: <span class="string">'./src/print.js'</span></div><div class="line">  &#125;,</div><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>]),</div><div class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">      title: <span class="string">'Output Management'</span></div><div class="line">    &#125;)</div><div class="line">  ],</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">'[name].bundle.js'</span>,</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>通过 manifest，webpack 能够对「你的模块映射到输出 bundle 的过程」保持追踪。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><p>以下工具仅用于开发环境</p>
+<h3 id="使用-source-map"><a href="#使用-source-map" class="headerlink" title="使用 source map"></a>使用 source map</h3><p>该功能将编译后的代码映射回原始源代码，当多个源文件打包到一个 bundle 中，出错时，可以准确知道错误来自哪个源文件。</p>
+<p>source map 有很多<a href="https://doc.webpack-china.org/configuration/devtool" target="_blank" rel="external">不同的选项</a>，可以根据需要进行配置。</p>
+<p>假如我们使用 <code>inline-source-map</code> 选项，那么可以在 webpack.config.js 中配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line">devtool: <span class="string">'inline-source-map'</span>,</div><div class="line"><span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>webpack 中有三个不同的选项，可以帮助我们在代码发生变化后自动编译代码：</p>
+<ol>
+<li><p>webpack’s Watch Mode</p>
+</li>
+<li><p>webpack-dev-server</p>
+</li>
+<li><p>webpack-dev-middleware</p>
+</li>
+</ol>
+<p>多数场景中，我们可以需要使用 <code>webpack-dev-server</code>，所以我只记录下这个选项。</p>
+<p><code>webpack-dev-server</code> 提供了一个简单的 web 服务器，能实时重新加载(live reloading)。</p>
+<p>首先，安装它：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev webpack-dev-server</div></pre></td></tr></table></figure>
+<p>然后还是在之前的配置文件中加入以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line">devServer: &#123;</div><div class="line">  contentBase: <span class="string">'./dist'</span></div><div class="line">&#125;,</div><div class="line"><span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>这会告知 <code>webpack-dev-server</code>，在 <code>localhost:8080</code> 下建立服务，将 <code>dist</code> 目录下的文件，作为可访问文件。</p>
+<p>然后添加一个 npm script ，通过 npm start 可以直接运行开发服务器(dev server):</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">"scripts": &#123;</div><div class="line">  // ...</div><div class="line">  "start": "webpack-dev-server --open"</div><div class="line">  // ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>webpack-dev-server</code> 带有许多可配置的选项。<a href="https://doc.webpack-china.org/configuration/dev-server" target="_blank" rel="external">相关文档</a></p>
+<h2 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h2><h3 id="启用-HMR"><a href="#启用-HMR" class="headerlink" title="启用 HMR"></a>启用 HMR</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 更新 webpack-dev-server 的配置，并使用 webpack 内置的 HMR 插件。我们还要删除掉 print.js 的入口起点，因为它现在正被 index.js 模式使用。</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">  <span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</div><div class="line">  <span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</div><div class="line">+ <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"></div><div class="line">  <span class="built_in">module</span>.exports = &#123;</div><div class="line">    entry: &#123;</div><div class="line">-      app: <span class="string">'./src/index.js'</span>,</div><div class="line">-      print: <span class="string">'./src/print.js'</span></div><div class="line">+      app: <span class="string">'./src/index.js'</span></div><div class="line">    &#125;,</div><div class="line">    devtool: <span class="string">'inline-source-map'</span>,</div><div class="line">    devServer: &#123;</div><div class="line">      contentBase: <span class="string">'./dist'</span>,</div><div class="line">+     hot: <span class="literal">true</span></div><div class="line">    &#125;,</div><div class="line">    plugins: [</div><div class="line">      <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>]),</div><div class="line">      <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">        title: <span class="string">'Hot Module Replacement'</span></div><div class="line">      &#125;),</div><div class="line">+     <span class="keyword">new</span> webpack.NamedModulesPlugin(), <span class="comment">// 便于查看要修补(patch)的依赖</span></div><div class="line">+     <span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</div><div class="line">    ],</div><div class="line">    output: &#123;</div><div class="line">      filename: <span class="string">'[name].bundle.js'</span>,</div><div class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;;</div></pre></td></tr></table></figure>
+<p>修改 <code>index.js</code> 文件，以便当 <code>print.js</code> 内部发生变更时可以告诉 webpack 接受更新的模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line">  <span class="keyword">import</span> printMe <span class="keyword">from</span> <span class="string">'./print.js'</span>;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">component</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">'button'</span>);</div><div class="line"></div><div class="line">    element.innerHTML = _.join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</div><div class="line"></div><div class="line">    btn.innerHTML = <span class="string">'Click me and check the console!'</span>;</div><div class="line">    btn.onclick = printMe;</div><div class="line"></div><div class="line">    element.appendChild(btn);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> element;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">document</span>.body.appendChild(component());</div><div class="line">+</div><div class="line">+ <span class="keyword">if</span> (<span class="built_in">module</span>.hot) &#123;</div><div class="line">+   <span class="built_in">module</span>.hot.accept(<span class="string">'./print.js'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">+     <span class="built_in">console</span>.log(<span class="string">'Accepting the updated printMe module!'</span>);</div><div class="line">+     printMe();</div><div class="line">+   &#125;)</div><div class="line">+ &#125;</div></pre></td></tr></table></figure>
+<p>更改 <code>print.js</code> 中 <code>consloe.log</code> 的输出内容，浏览器中看到相应的输出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">printMe</span>(<span class="params"></span>) </span>&#123;</div><div class="line">-   <span class="built_in">console</span>.log(<span class="string">'I get called from print.js!'</span>);</div><div class="line">+   <span class="built_in">console</span>.log(<span class="string">'Updating print.js...'</span>)</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="通过-Node-js-API"><a href="#通过-Node-js-API" class="headerlink" title="通过 Node.js API"></a>通过 Node.js API</h3><p><strong>dev-server.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> webpackDevServer = <span class="built_in">require</span>(<span class="string">'webpack-dev-server'</span>);</div><div class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./webpack.config.js'</span>);</div><div class="line"><span class="keyword">const</span> options = &#123;</div><div class="line">  contentBase: <span class="string">'./dist'</span>,</div><div class="line">  hot: <span class="literal">true</span>,</div><div class="line">  host: <span class="string">'localhost'</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 想要启用 HMR，还需要修改 webpack 配置对象，使其包含 HMR 入口起点。</span></div><div class="line"><span class="comment">// webpack-dev-server package 中具有一个叫做 addDevServerEntrypoints 的方法实现了这个目标</span></div><div class="line">webpackDevServer.addDevServerEntrypoints(config, options);</div><div class="line"><span class="keyword">const</span> compiler = webpack(config);</div><div class="line"><span class="comment">// 不要将 dev server 选项放在 webpack 配置对象(webpack config object)中。而是，在创建选项时，将其作为第二个参数传递。</span></div><div class="line"><span class="keyword">const</span> server = <span class="keyword">new</span> webpackDevServer(compiler, options);</div><div class="line"></div><div class="line">server.listen(<span class="number">5000</span>, <span class="string">'localhost'</span>, () =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'dev server listening on port 5000'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>可是，控制台仍然打印旧的 <code>printMe</code> 功能，这是因为 <code>onclick</code> 事件仍然绑定旧的 <code>printMe</code> 函数。下面作出修改：</p>
+<p><strong>index.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line">  <span class="keyword">import</span> printMe <span class="keyword">from</span> <span class="string">'./print.js'</span>;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">component</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">'button'</span>);</div><div class="line"></div><div class="line">    element.innerHTML = _.join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</div><div class="line"></div><div class="line">    btn.innerHTML = <span class="string">'Click me and check the console!'</span>;</div><div class="line">    btn.onclick = printMe;  <span class="comment">// onclick 事件绑定原始的 printMe 函数上</span></div><div class="line"></div><div class="line">    element.appendChild(btn);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> element;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">- <span class="built_in">document</span>.body.appendChild(component());</div><div class="line">+ <span class="keyword">let</span> element = component(); <span class="comment">// 当 print.js 改变导致页面重新渲染时，重新获取渲染的元素</span></div><div class="line">+ <span class="built_in">document</span>.body.appendChild(element);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (<span class="built_in">module</span>.hot) &#123;</div><div class="line">    <span class="built_in">module</span>.hot.accept(<span class="string">'./print.js'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'Accepting the updated printMe module!'</span>);</div><div class="line">-     printMe();</div><div class="line">+     <span class="built_in">document</span>.body.removeChild(element); <span class="comment">// 删除原来的</span></div><div class="line">+     element = component(); <span class="comment">// 重新渲染页面后，component 更新 click 事件处理</span></div><div class="line">+     <span class="built_in">document</span>.body.appendChild(element);</div><div class="line">    &#125;)</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="HMR-修改样式表"><a href="#HMR-修改样式表" class="headerlink" title="HMR 修改样式表"></a>HMR 修改样式表</h3><p>借助于 <code>style-loader</code> 的帮助，CSS 的模块热替换实际上是相当简单的。当更新 CSS 依赖模块时，此 loader 在后台使用 <code>module.hot.accept</code> 来修补(patch) <code>&lt;style&gt;</code> 标签。</p>
+<h3 id="其它代码和框架"><a href="#其它代码和框架" class="headerlink" title="其它代码和框架"></a>其它代码和框架</h3><p>既然我在学习 Vue.js，自然少不了 Vue Loader 的学习。</p>
+<p>Vue Loader：此 loader 支持用于 vue 组件的 HMR，提供开箱即用体验。</p>
+<h2 id="Tree-Shaking"><a href="#Tree-Shaking" class="headerlink" title="Tree Shaking"></a>Tree Shaking</h2><p>tree shaking 是一个术语，通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。它依赖于 ES2015 模块系统中的静态结构特性，例如 <code>import</code> 和 <code>export</code>。</p>
+<p>我们通过 <code>import</code> 和 <code>export</code> 语法标识出了未引用代码，为了从 bundle 中删除它们，可以使用压缩工具(minifier) <code>UglifyJSPlugin</code> 。</p>
+<p>先安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i --save-dev uglifyjs-webpack-plugin</div></pre></td></tr></table></figure>
+<p>然后将其添加到我们的配置中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">+ <span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  entry: <span class="string">'./src/index.js'</span>,</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">'bundle.js'</span>,</div><div class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">- &#125;</div><div class="line">+ &#125;,</div><div class="line">+ plugins: [</div><div class="line">+   <span class="keyword">new</span> UglifyJSPlugin()</div><div class="line">+ ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="生产环境构建"><a href="#生产环境构建" class="headerlink" title="生产环境构建"></a>生产环境构建</h2><p>开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置。</p>
+<p>两者做了略微区分，但是我们还保留了一个通用配置。使用 <code>webpack-merge</code> 工具将这些配置合并在一起。通过“通用”配置，我们不必在环境特定(environment-specific)的配置中重复代码。</p>
+<p>先安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev webpack-merge</div></pre></td></tr></table></figure>
+<p>代码分离：</p>
+<p><strong>project</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  webpack-demo</div><div class="line">  |- package.json</div><div class="line">- |- webpack.config.js</div><div class="line">+ |- webpack.common.js</div><div class="line">+ |- webpack.dev.js</div><div class="line">+ |- webpack.prod.js</div><div class="line">  |- /dist</div><div class="line">  |- /src</div><div class="line">    |- index.js</div><div class="line">    |- math.js</div><div class="line">  |- /node_modules</div></pre></td></tr></table></figure>
+<p><strong>webpack.common.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ <span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">+ <span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</div><div class="line">+ <span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</div><div class="line">+</div><div class="line">+ <span class="built_in">module</span>.exports = &#123;</div><div class="line">+   entry: &#123;</div><div class="line">+     app: <span class="string">'./src/index.js'</span></div><div class="line">+   &#125;,</div><div class="line">+   plugins: [</div><div class="line">+     <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>]),</div><div class="line">+     <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</div><div class="line">+       title: <span class="string">'Production'</span></div><div class="line">+     &#125;)</div><div class="line">+   ],</div><div class="line">+   output: &#123;</div><div class="line">+     filename: <span class="string">'[name].bundle.js'</span>,</div><div class="line">+     path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">+   &#125;</div><div class="line">+ &#125;;</div></pre></td></tr></table></figure>
+<p><strong>webpack.dev.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">+ <span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</div><div class="line">+ <span class="keyword">const</span> common = <span class="built_in">require</span>(<span class="string">'./webpack.common.js'</span>);</div><div class="line">+</div><div class="line">+ <span class="built_in">module</span>.exports = merge(common, &#123;</div><div class="line">+   devtool: <span class="string">'inline-source-map'</span>,</div><div class="line">+   devServer: &#123;</div><div class="line">+     contentBase: <span class="string">'./dist'</span></div><div class="line">+   &#125;</div><div class="line">+ &#125;);</div></pre></td></tr></table></figure>
+<p><strong>webpack.prod.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">+ <span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</div><div class="line">+ <span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>);</div><div class="line">+ <span class="keyword">const</span> common = <span class="built_in">require</span>(<span class="string">'./webpack.common.js'</span>);</div><div class="line">+</div><div class="line">+ <span class="built_in">module</span>.exports = merge(common, &#123;</div><div class="line">+   plugins: [</div><div class="line">+     <span class="keyword">new</span> UglifyJSPlugin()</div><div class="line">+   ]</div><div class="line">+ &#125;);</div></pre></td></tr></table></figure>
+<p>修改 npm scripts：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">    "scripts": &#123;</div><div class="line">-     "start": "webpack-dev-server --open",</div><div class="line">+     "start": "webpack-dev-server --open --config webpack.dev.js",</div><div class="line">-     "build": "webpack"</div><div class="line">+     "build": "webpack --config webpack.prod.js"</div><div class="line">    &#125;,</div></pre></td></tr></table></figure>
+<p>除了 <code>UglifyJSPlugin</code> ，类似的比较受欢迎的还有 <code>BabelMinifyWebpackPlugin</code> 和 <code>ClosureCompilerPlugin</code></p>
+<p>鼓励在生产环境中 <code>source-map</code> 选项：</p>
+<p><strong>webpack.prod.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</div><div class="line">  <span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>);</div><div class="line">  <span class="keyword">const</span> common = <span class="built_in">require</span>(<span class="string">'./webpack.common.js'</span>);</div><div class="line"></div><div class="line">  <span class="built_in">module</span>.exports = merge(common, &#123;</div><div class="line">+   devtool: <span class="string">'source-map'</span>, <span class="comment">//避免在生产中使用 inline-*** 和 eval-***，因为它们增加 bundle 大小。</span></div><div class="line">    plugins: [</div><div class="line">-     <span class="keyword">new</span> UglifyJSPlugin()</div><div class="line">+     <span class="keyword">new</span> UglifyJSPlugin(&#123;</div><div class="line">+       sourceMap: <span class="literal">true</span></div><div class="line">+     &#125;)</div><div class="line">    ]</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<h3 id="指定环境"><a href="#指定环境" class="headerlink" title="指定环境"></a>指定环境</h3><p>webpack.prod.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">+ <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line">  <span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">'webpack-merge'</span>);</div><div class="line">  <span class="keyword">const</span> UglifyJSPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>);</div><div class="line">  <span class="keyword">const</span> common = <span class="built_in">require</span>(<span class="string">'./webpack.common.js'</span>);</div><div class="line"></div><div class="line">  <span class="built_in">module</span>.exports = merge(common, &#123;</div><div class="line">    devtool: <span class="string">'cheap-module-source-map'</span>,</div><div class="line">    plugins: [</div><div class="line">      <span class="keyword">new</span> UglifyJSPlugin(&#123;</div><div class="line">        sourceMap: <span class="literal">true</span></div><div class="line">      &#125;),</div><div class="line">+     <span class="keyword">new</span> webpack.DefinePlugin(&#123; <span class="comment">// 用 webpack 内置的 DefinePlugin 为所有的依赖定义这个变量</span></div><div class="line">+       <span class="string">'process.env'</span>: &#123; <span class="comment">// 许多 library 将通过与 process.env.NODE_ENV 环境变量关联，以决定 library 中应该引用哪些内容</span></div><div class="line">+         <span class="string">'NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</div><div class="line">+       &#125;</div><div class="line">+     &#125;)</div><div class="line">    ]</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<h2 id="代码分离"><a href="#代码分离" class="headerlink" title="代码分离"></a>代码分离</h2><p>此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。</p>
+<ul>
+<li><p>入口起点：使用 entry 配置手动地分离代码</p>
+</li>
+<li><p>防止重复：使用 <code>CommonsChunkPlugin</code> 去重和分离代码。</p>
+</li>
+<li><p>动态导入：通过模块的内联函数调用来分离代码。(<code>import</code> 和 <code>async</code>)</p>
+</li>
+</ul>
+<h3 id="bundle-分析"><a href="#bundle-分析" class="headerlink" title="bundle 分析"></a>bundle 分析</h3><p>官方分析工具和社区支持的可选工具</p>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p><a href="https://alexjoverm.github.io/2017/07/16/Lazy-load-in-Vue-using-Webpack-s-code-splitting/" target="_blank" rel="external">Vue的懒加载</a></p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>由于缓存的技术，需要修改文件名，浏览器才能知道更新。</p>
+<p>使用 <code>[chunkhash]</code> 替换，将 <code>output</code> 中修改为 <code>filename: &#39;[name].[chunkname].js&#39;</code></p>
+<h3 id="提取模板-Extracting-Boilerplate"><a href="#提取模板-Extracting-Boilerplate" class="headerlink" title="提取模板(Extracting Boilerplate)"></a>提取模板(Extracting Boilerplate)</h3><p>还是webpack 的内置插件 <code>CommonChunkPlugin</code>，可以将 wepack 的样板和 manifest 提取出来。通过指定 entry 配置中未用到的名称，此插件会自动将我们需要的内容提取到单独的包中。</p>
+<p>在 <code>plugins</code> 中加入实例 <code>new webpack.optimize.CommonsChunkPlugin({ name: &#39;runtime&#39; })</code></p>
+<p>推荐将第三方库提取到单独的 <code>vendor</code> chunk 文件中，因为它们很少像本地源码那样频繁修改。<br>这可以通过使用新的 entry(入口) 起点，以及再额外配置一个 CommonsChunkPlugin 实例的组合方式来实现。</p>
+<h3 id="模块标识符-Module-Identifiers"><a href="#模块标识符-Module-Identifiers" class="headerlink" title="模块标识符(Module Identifiers)"></a>模块标识符(Module Identifiers)</h3><p>由于模块标识符会基于默认的解析顺序进行增量，导致在修改本地依赖时，vendor 的 hash 发生变化，可以使用两个插件解决这个问题。<code>NamedModulesplugin</code> 和 <code>HashedModuleIdsPlugin</code>，前者使用模块的路径代替数字标识符，可读性高但执行时间长适合开发过程中使用，后者更适合生产环境。</p>
+<h2 id="创建-Library"><a href="#创建-Library" class="headerlink" title="创建 Library"></a>创建 Library</h2><p>除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。（暂时不需要了解）</p>
+<h2 id="Shimming"><a href="#Shimming" class="headerlink" title="Shimming"></a>Shimming</h2><h2 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h2><h2 id="使用环境变量"><a href="#使用环境变量" class="headerlink" title="使用环境变量"></a>使用环境变量</h2><p>需要环境变量来消除开发和生产构建之间 <code>webpack.config.js</code> 的差异。</p>
+<p>webpack 命令行环境配置中，通过设置 <code>--env</code> 可以使你根据需要，传入尽可能多的环境变量。在 <code>webpack.config.js</code> 文件中可以访问到这些环境变量。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webpack --env.NODE_ENV=local --env.production --progress</div></pre></td></tr></table></figure>
+<p>如果设置 <code>env</code> 变量，却没有赋值，<code>--env.production</code> 默认将 <code>--env.production</code> 设置为 <code>true</code>。</p>
+<p>通常，在 webpack config 中，<code>module.exports</code> 指向配置对象。要使用 <code>env</code> 变量，你必须将 <code>module.exports</code> 转换成一个函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">env</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// Use env.&lt;YOUR VARIABLE&gt; here:</span></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'NODE_ENV: '</span>, env.NODE_ENV) <span class="comment">// 'local'</span></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Production: '</span>, env.production) <span class="comment">// true</span></div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    entry: <span class="string">'./src/index.js'</span>,</div><div class="line">    output: &#123;</div><div class="line">      filename: <span class="string">'bundle.js'</span>,</div><div class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="构建性能"><a href="#构建性能" class="headerlink" title="构建性能"></a>构建性能</h2><p>提到一些优化性能的方法</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+    </div>
+      
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Webpack3-0/" rel="tag"><i class="fa fa-tag"></i> Webpack3.0</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/27/Vue.js学习笔记11/" rel="next" title="Vue.js学习笔记11">
+                <i class="fa fa-chevron-left"></i> Vue.js学习笔记11
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display:none"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="胡国康" />
+            
+              <p class="site-author-name" itemprop="name">胡国康</p>
+              <p class="site-description motion-element" itemprop="description">天道酬勤，功不唐捐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/HGKcoding" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:huguokang2017@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#入口起点-Entry-Point"><span class="nav-number">2.1.</span> <span class="nav-text">入口起点(Entry Point)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出-output"><span class="nav-number">2.2.</span> <span class="nav-text">输出(output)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loader"><span class="nav-number">2.3.</span> <span class="nav-text">Loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件-Plugins"><span class="nav-number">2.4.</span> <span class="nav-text">插件(Plugins)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块-Modules"><span class="nav-number">2.5.</span> <span class="nav-text">模块(Modules)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块解析-Module-Resolution"><span class="nav-number">2.6.</span> <span class="nav-text">模块解析(Module Resolution)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖图-Dependency-Graph"><span class="nav-number">2.7.</span> <span class="nav-text">依赖图(Dependency Graph)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建目标-Targets"><span class="nav-number">2.8.</span> <span class="nav-text">构建目标(Targets)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Manifest"><span class="nav-number">2.9.</span> <span class="nav-text">Manifest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块热替换-Hot-Module-Replacement"><span class="nav-number">2.10.</span> <span class="nav-text">模块热替换(Hot Module Replacement)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指南"><span class="nav-number">3.</span> <span class="nav-text">指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#本地安装"><span class="nav-number">3.1.</span> <span class="nav-text">本地安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#起步"><span class="nav-number">3.2.</span> <span class="nav-text">起步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理资源"><span class="nav-number">3.3.</span> <span class="nav-text">管理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理输出"><span class="nav-number">3.4.</span> <span class="nav-text">管理输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发"><span class="nav-number">3.5.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-source-map"><span class="nav-number">3.5.1.</span> <span class="nav-text">使用 source map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块热替换"><span class="nav-number">3.6.</span> <span class="nav-text">模块热替换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启用-HMR"><span class="nav-number">3.6.1.</span> <span class="nav-text">启用 HMR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-Node-js-API"><span class="nav-number">3.6.2.</span> <span class="nav-text">通过 Node.js API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMR-修改样式表"><span class="nav-number">3.6.3.</span> <span class="nav-text">HMR 修改样式表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它代码和框架"><span class="nav-number">3.6.4.</span> <span class="nav-text">其它代码和框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tree-Shaking"><span class="nav-number">3.7.</span> <span class="nav-text">Tree Shaking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生产环境构建"><span class="nav-number">3.8.</span> <span class="nav-text">生产环境构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指定环境"><span class="nav-number">3.8.1.</span> <span class="nav-text">指定环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分离"><span class="nav-number">3.9.</span> <span class="nav-text">代码分离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bundle-分析"><span class="nav-number">3.9.1.</span> <span class="nav-text">bundle 分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒加载"><span class="nav-number">3.10.</span> <span class="nav-text">懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">3.11.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提取模板-Extracting-Boilerplate"><span class="nav-number">3.11.1.</span> <span class="nav-text">提取模板(Extracting Boilerplate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块标识符-Module-Identifiers"><span class="nav-number">3.11.2.</span> <span class="nav-text">模块标识符(Module Identifiers)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Library"><span class="nav-number">3.12.</span> <span class="nav-text">创建 Library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shimming"><span class="nav-number">3.13.</span> <span class="nav-text">Shimming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TypeScript"><span class="nav-number">3.14.</span> <span class="nav-text">TypeScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用环境变量"><span class="nav-number">3.15.</span> <span class="nav-text">使用环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建性能"><span class="nav-number">3.16.</span> <span class="nav-text">构建性能</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">胡国康</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'HGKcoding',
+            repo: 'hgkcoding.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '630ce61d9fd8fe4d43abee91042595716d7ae13a',
+            
+                client_id: 'ffde74160740b52d23ce'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("CMPBrwQPQa4bBzeRVURNvVUn-gzGzoHsz", "dhQWaPLPiiDimvHUJziHbGpX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
