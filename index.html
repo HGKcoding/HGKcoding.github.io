@@ -441,99 +441,14 @@
 
       
         
-          
-            <script src="/assets/js/APlayer.min.js"> </script><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="http://oy7msxtdy.bkt.clouddn.com/git.jpg" alt="git-logo"><br>之前只在廖雪峰的 Git 教程中简单地学习了一下，并没有在实际的项目中使用过，现阶段正在模仿 Vue 项目，就想着使用一下 git，更加地模拟以后的工作环境。我是属于边学习<a href="https://git.oschina.net/progit" target="_blank" rel="external">Git中文官方教程</a>边动手使用它，这样更容易掌握这个工具。</p>
-<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h2 id="初次运行-Git-前的配置"><a href="#初次运行-Git-前的配置" class="headerlink" title="初次运行 Git 前的配置"></a>初次运行 Git 前的配置</h2><h3 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h3><p>第一个要配置的就是个人用户名称和电子邮件地址。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> git config --global user.name "Jony J"</div><div class="line"><span class="meta">$</span> git config --global user.email jonyj@gmail.com</div></pre></td></tr></table></figure>
-<p><code>--global</code> 选项表示以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其它名字或者电邮，只要去掉 <code>--global</code> 选项重新配置，新的设定保存在当前项目的 <code>.git/config</code> 文件里。</p>
-<p>要检查已有的配置信息，可以使用 <code>git config --list</code> 命令。</p>
-<h2 id="获取帮助"><a href="#获取帮助" class="headerlink" title="获取帮助"></a>获取帮助</h2><p>有三种方法向 Git 寻求帮助：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> git help &lt;verb&gt;</div><div class="line"><span class="meta">$</span> git &lt;verb&gt; --help</div><div class="line"><span class="meta">$</span> man git-&lt;verb&gt;</div></pre></td></tr></table></figure>
-<h1 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h1><h2 id="取得项目的-Git-仓库"><a href="#取得项目的-Git-仓库" class="headerlink" title="取得项目的 Git 仓库"></a>取得项目的 Git 仓库</h2><p>有两种取得 Git 项目仓库的方法。</p>
-<ol>
-<li><p>第一种是在现存的目录下，通过导入所有文件来创建新的 Git 仓库，使用 <code>git init</code> 命令初始化，但是目前还没有跟踪管理项目中的任何一个文件。如果当前目录下有几个文件想要纳入版本控制，需要先用 <code>git add</code> 命令告诉 Git 开始对这些文件进行跟踪，然后提交：<br></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> git add *.c</div><div class="line"><span class="meta">$</span> git add README</div><div class="line"><span class="meta">$</span> git commit -m 'initial project version'</div></pre></td></tr></table></figure>
-</li>
-<li><p>第二种是从已有的 Git 仓库克隆出一个新的镜像仓库来，使用 <code>git clone [url]</code> 命令。</p>
-</li>
-</ol>
-<h2 id="记录每次更新到仓库"><a href="#记录每次更新到仓库" class="headerlink" title="记录每次更新到仓库"></a>记录每次更新到仓库</h2><p>Git 管理项目时，文件流转的三个工作区域：Git 的工作目录，暂存区域，以及本地仓库。<br><br><img src="http://oy7msxtdy.bkt.clouddn.com/local-operation.png" alt="local-operations"></p>
-<p>请记住，工作目录下面的所有文件都不外乎这两种状态：已跟踪或未跟踪。已跟踪的文件是指本来就被纳入版本控制管理的文件，在上次快照中有它们的记录，工作一段时间后，它们的状态可能是未更新，已修改或者已放入暂存区。而所有其他文件都属于未跟踪文件。它们既没有上次更新时的快照，也不在当前的暂存区域。初次克隆某个仓库时，工作目录中的所有文件都属于已跟踪文件，且状态为未修改。</p>
-<p>在编辑过某些文件之后，Git 将这些文件标为已修改。我们逐步把这些修改过的文件放到暂存区域，直到最后一次性提交所有这些暂存起来的文件，如此重复。<br><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0201-tn.png" alt="file-status-lifecycle"></p>
-<p>使用 <code>git status</code> 命令确定哪些文件当前处于什么状态。只要在“Untracked files”这行下面，就说明是未跟踪状态。使用 <code>git add</code> 命令跟踪新文件，在 <code>git add</code> 后面可以指明要跟踪的文件或目录路径。只要在 “Changes to be committed” 这行下面的，就说明是已暂存状态。在 “Changes not staged for commit” 这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。要暂存这次更新，需要运行 <code>git add</code> 命令（这是个多功能命令，根据目标文件的状态不同，此命令的效果也不同：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等）。</p>
-<p>每次修改文件都需要使用 <code>git add</code> 命令将最新版本重新暂存起来。</p>
-<p>一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。我们可以创建一个名为 <code>.gitignore</code> 的文件，列出要忽略的文件模式。如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> cat .gitignore</div><div class="line">     *.[oa]</div><div class="line">     *~</div></pre></td></tr></table></figure>
-<p>第一行告诉 Git 忽略所有以 .o 或 .a 结尾的文件。一般这类对象文件和存档文件都是编译过程中出现的，我们用不着跟踪它们的版本。第二行告诉 Git 忽略所有以波浪符（~）结尾的文件，许多文本编辑软件（比如 Emacs）都用这样的文件名保存副本。</p>
-<p>文件 <code>.gitignore</code> 有自己的格式规范，要养成好一开始就设置好该文件的习惯。</p>
-<ol>
-<li>所有空行或者以注释符号 ＃ 开头的行都会被 Git 忽略。<br></li>
-<li>可以使用标准的 glob 模式（ shell 所使用的简化了的正则表达式）匹配。<br></li>
-<li>匹配模式最后跟反斜杠（/）说明要忽略的是目录。<br></li>
-<li>要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。<br></li>
-</ol>
-<p>实际上 <code>git status</code> 的显示比较简单，仅仅是列出了修改过的文件，如果要查看具体修改了什么地方，可以用 <code>git diff</code> 命令。此命令比较的是工作目录中当前文件和暂存区域快照之间的差异，也就是修改之后还没有暂存起来的变化内容。</p>
-<p>若要看已经暂存起来的文件和上次提交时的快照之间的差异，可以用 <code>git diff --cached</code> 或者 <code>git diff --staged</code> 命令（后者要在 v1.6.1 及更高版本才能使用）。</p>
-<h3 id="提交文件"><a href="#提交文件" class="headerlink" title="提交文件"></a>提交文件</h3><p>使用 <code>git commit -m &quot;本次提交的说明&quot;</code> 命令提交。</p>
-<p>尽管使用暂存区域的方式可以精心准备要提交的细节，但有时候这么做略显繁琐。Git 提供了一个跳过使用暂存区域的方式，只要在提交的时候，给 <code>git commit</code> 加上 <code>-a</code> 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 <code>git add</code> 步骤。</p>
-<h3 id="移除文件"><a href="#移除文件" class="headerlink" title="移除文件"></a>移除文件</h3><p>如果只是简单地从工作目录中<strong>手动</strong>删除，运行 <code>git status</code> 时就会在 “Changes not staged for commit” 部分看到，staged 无变化。</p>
-<p>先手动删除 <code>rm something</code> ，然后运行 <code>git rm something</code> 记录此次移除文件的操作，最后提交的时候，该 “something” 文件就不再纳入版本管理了。</p>
-<p>如果删除之前修改过但没有被 staged 的文件，则必须要用强制删除选项 <code>-f</code>（即 force 的首字母）。</p>
-<p>如果仅从 staged 中删除，但仍然保留在工作区域，使用 <code>git rm --cached something</code> 命令。</p>
-<p>使用 <code>git mv file_from file_to</code> 对文件进行改名。</p>
-<h2 id="查看提交历史"><a href="#查看提交历史" class="headerlink" title="查看提交历史"></a>查看提交历史</h2><p><code>git log</code> 命令查看提交历史。可以看到每次更新都有一个 SHA-1 校验和、作者的名字和电子邮件地址、提交时间，最后缩进一个段落显示提交说明。</p>
-<p><code>git log -p -2</code> 命令中 <code>-p</code> 选项表示展开每次提交的内容差异，<code>-2</code> 选项显示最近的两次提交。</p>
-<p><code>--stat</code> 选项仅显示简要的增减行数统计。</p>
-<p><code>--pretty</code> 选项可以指定完全不同于默认格式的方式展示提交历史，如：<code>git log --pretty=online</code> 将每个提交放在一行显示。这个选项还有其它值，如：<code>short</code> ，<code>full</code> 和 <code>fuller</code> 等。最牛逼的是 <code>format</code> ，甚至可以定制想要显示的记录格式，如：<code>git log --pretty=format:&quot;%h - %an, %ar : %s&quot;</code> 。</p>
-<p>format的选项说明：<br>%H 提交对象（commit）的完整哈希字串<br><br>%h 提交对象的简短哈希字串<br><br>%T 树对象（tree）的完整哈希字串<br><br>%t 树对象的简短哈希字串<br><br>%P 父对象（parent）的完整哈希字串<br><br>%p 父对象的简短哈希字串<br><br>%an 作者（author）的名字<br><br>%ae 作者的电子邮件地址<br><br>%ad 作者修订日期（可以用 -date= 选项定制格式）<br><br>%ar 作者修订日期，按多久以前的方式显示<br><br>%cn 提交者(committer)的名字<br><br>%ce 提交者的电子邮件地址<br><br>%cd 提交日期<br><br>%cr 提交日期，按多久以前的方式显示<br><br>%s 提交说明<br></p>
-<p>选项说明：<br>-p 按补丁格式显示每个更新之间的差异。<br><br>–stat 显示每次更新的文件修改统计信息。<br><br>–shortstat 只显示 –stat 中最后的行数修改添加移除统计。<br><br>–name-only 仅在提交信息后显示已修改的文件清单。<br><br>–name-status 显示新增、修改、删除的文件清单。<br><br>–abbrev-commit 仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。<br><br>–relative-date 使用较短的相对时间显示（比如，“2 weeks ago”）。<br><br>–graph 显示 ASCII 图形表示的分支合并历史。<br><br>–pretty 使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。<br></p>
-<h3 id="限制输出长度"><a href="#限制输出长度" class="headerlink" title="限制输出长度"></a>限制输出长度</h3><p>选项说明：<br>-(n) 仅显示最近的 n 条提交。<br><br>–since, –after 仅显示指定时间之后的提交。<br><br>–until, –before 仅显示指定时间之前的提交。<br><br>–author 仅显示指定作者相关的提交。<br><br>–committer 仅显示指定提交者相关的提交。<br></p>
-<p>举例，如果要查看 Git 仓库中，2008 年 10 月期间，gitster 提交的但未合并的测试脚本（位于项目的 t/ 目录下的文件），可以用下面的查询命令：</p>
-<p><code>$ git log --pretty=&quot;%h - %s&quot; --author=gitster --since=&quot;2008-10-01&quot; --before=&quot;2008-11-01&quot; --no-merges -- t/</code></p>
-<p>可以使用 gitk 这类图形化工具查阅提交历史。</p>
-<h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><h3 id="修改最后一次操作"><a href="#修改最后一次操作" class="headerlink" title="修改最后一次操作"></a>修改最后一次操作</h3><p>有时候我们提交完了才发现漏掉了几个文件没有加，或者提交信息写错了。可以使用 <code>git commit --amend</code> 命令，此命令将使用当前的暂存区域快照提交。如果刚才提交完没有作任何改动，直接运行此命令的话，相当于有机会重新编辑提交说明。新的提交说明会覆盖刚才失误的提交。如果是忘记了暂存某些修改，可以在先补上暂存操作，再运行 <code>git commit --amend</code> 命令。</p>
-<h3 id="取消已经暂存的文件"><a href="#取消已经暂存的文件" class="headerlink" title="取消已经暂存的文件"></a>取消已经暂存的文件</h3><p>假如失误用 <code>git add .</code> 命令将修改全加到暂存区域，可以通过 <code>git reset HEAD &lt;file&gt;...</code> 的方式取消暂存。</p>
-<h3 id="取消对文件的修改"><a href="#取消对文件的修改" class="headerlink" title="取消对文件的修改"></a>取消对文件的修改</h3><p>使用 <code>git checkout --&lt;file&gt;...</code> 命令抛弃文件修改。这些命令 Git 会提示你。要慎重使用这条命令，它会取消所有对文件的修改，所以在用这条命令前，请务必确定真的不再需要保留刚才的修改。如果只是想回退版本，同时保留刚才的修改以便将来继续工作，可以用 stashing 和分支来处理，应该会更好些。</p>
-<p>任何已经提交到 Git 的都可以被恢复。所以，你可能失去的数据，仅限于没有提交过的，对 Git 来说它们就像从未存在过一样。</p>
-<h2 id="远程仓库的使用"><a href="#远程仓库的使用" class="headerlink" title="远程仓库的使用"></a>远程仓库的使用</h2><h3 id="查看当前的远程仓库"><a href="#查看当前的远程仓库" class="headerlink" title="查看当前的远程仓库"></a>查看当前的远程仓库</h3><p>可以使用 <code>git remove</code> 命令来查看当前配置有哪些远程仓库。它会列出每个远程库的简短名字，在克隆完某个项目后，至少可以看到一个名为 origin 的远程库，Git 默认使用这个名字来标识你所克隆的原始仓库。加个 <code>-v</code> 选项可以显示对应的克隆地址。</p>
-<h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><p>要添加一个新的远程仓库，可以指定一个简单的名字，以便将来引用，运行 <code>git remote add [shortname] [url]</code>。</p>
-<h3 id="从远程仓库抓取数据"><a href="#从远程仓库抓取数据" class="headerlink" title="从远程仓库抓取数据"></a>从远程仓库抓取数据</h3><p>使用 <code>git fetch [remote-name]</code> ，这条命令只会抓取所有你本地仓库中还没有的数据。如果是克隆的一个仓库，使用 <code>git fetch origin</code> 来获取更新。</p>
-<p>如果设置了某个分支用于跟踪某个远端仓库的分支，可以使用 <code>git pull</code> 命令自动抓取数据下来，然后将远端分支自动合并到本地仓库中当前分支。实际上，默认情况下 <code>git clone</code> 命令本质上就是自动创建了本地的 master 分支用于跟踪远程仓库中的 master 分支（假设远程仓库确实有 master 分支）。所以一般我们运行 <code>git pull</code>，目的都是要从原始克隆的远端仓库中抓取数据后，合并到工作目录中的当前分支。</p>
-<h3 id="推送数据到远程仓库"><a href="#推送数据到远程仓库" class="headerlink" title="推送数据到远程仓库"></a>推送数据到远程仓库</h3><p>项目进行到一个阶段，要同别人分享目前的成果，可以将本地仓库中的数据推送到远程仓库。实现这个任务的命令很简单： <code>git push [remote-name] [branch-name]</code>。</p>
-<p>只有在所克隆的服务器上有写权限，或者同一时刻没有其他人在推数据，这条命令才会如期完成任务。如果在你推数据前，已经有其他人推送了若干更新，那你的推送操作就会被驳回。你必须先把他们的更新抓取到本地，合并到自己的项目中，然后才可以再次推送。</p>
-<h3 id="查看远程仓库信息"><a href="#查看远程仓库信息" class="headerlink" title="查看远程仓库信息"></a>查看远程仓库信息</h3><p>我们可以通过命令 <code>git remote show [remote-name]</code> 查看某个远程仓库的详细信息。</p>
-<h3 id="远程仓库的删除和重命名"><a href="#远程仓库的删除和重命名" class="headerlink" title="远程仓库的删除和重命名"></a>远程仓库的删除和重命名</h3><p>使用 <code>git remote rename pb paul</code> 命令可以将 pb 重命名为 paul。</p>
-<p>使用 <code>git remote rm paul</code> 命令可以删除 paul。</p>
-<h2 id="打标签"><a href="#打标签" class="headerlink" title="打标签"></a>打标签</h2><p><code>git tag</code> 命令显示所有标签，<code>git tag -l &#39;v1.4.2.*&#39;</code>命令显示1.4.2系列的版本标签。</p>
-<p><code>git tag -a v1.4 -m &#39;my version 1.4&#39;</code> 命名创建一个含附注类型的标签。<code>-a</code> 选项是 annotated（带注释的） 的首字母。</p>
-<p><code>git tag -a v1.2 校验和或它的前几位字符</code> 命令可用于后期补加标签。</p>
-<p><code>git push origin [tagname]</code> 命令用来将标签传送到远端服务器。可使用 <code>git push origin --tags</code> 一次性推送所有标签。</p>
-<h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0313-tn.png" alt="fast-forward"><br><br>由于当前 master 分支所在的提交对象是要并入的 hotfix 分支的直接上游，Git 只需把 master 分支指针直接右移。换句话说，如果顺着一个分支走下去可以到达另一个分支的话，那么 Git 在合并两者时，只会简单地把指针右移，因为这种单线的历史分支不存在任何需要解决的分歧，所以这种合并过程可以称为快进（Fast forward）。<br><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0314-tn.png" alt="fast-forward"><br></p>
-<p><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0315-tn.png" alt="issue53-1"><br><br>iss53分支不受影响继续推进<br><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0316-tn.png" alt="issue53-2"><br><br>Git 会用两个分支的末端（C4 和 C5）以及它们的共同祖先（C2）进行一次简单的三方合并计算。<br><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0317-tn.png" alt="issue53-3"><br><br>并对三方合并后的结果重新做一个新的快照，并自动创建一个指向它的提交对象（C6）。</p>
-<h2 id="关于分支的命令"><a href="#关于分支的命令" class="headerlink" title="关于分支的命令"></a>关于分支的命令</h2><p><code>git branch 分支名</code> ：创建一个新分支。</p>
-<p><code>git checkout 分支名</code> ：切换到另一个分支。</p>
-<p><code>git checkout -b 分支名</code> ：创建一个新分支并切换过去。</p>
-<p><code>git branch -d 分支名</code> ：删除一个分支。由于 Git 中的分支实际上仅是一个包含所指对象校验和（40 个字符长度 SHA-1 字串）的文件，所以创建和销毁一个分支就变得非常廉价。</p>
-<p>先 <code>git checkout master</code> 到默认分支，然后再 <code>git merge 分支名</code> 合并分支，最后删除已经用的分支。</p>
-<p>如何在不同分支修改了同一文件的同一处，将导致 <code>unmerged</code> 问题，Git 会定位到出新问题的文件，并要求你手动解决分歧。可以运行 <code>git mergetool</code> 命令来调用可视化合并工具辅助你解决冲突。</p>
-<p><code>git branch</code> 可以列出所有分支的清单，带有 <code>*</code> 号的是当前分支。</p>
-<p><code>git branch -v</code> 可以查看每个分支最后一个提交的信息。</p>
-<p><code>git branch --merged</code> 查看哪些分支已经并入当前分支。<code>git branch --no-merged</code> 反之。</p>
-<p>对于没有合并过来的分支，由于包含着尚未合并的工作成果，简单地使用 <code>git branch -d 文件名</code> 删除是会提示错误，如果确实要删除，可以使用 <code>git branch -D 文件名</code> 强制删除。</p>
-<h2 id="远程分支"><a href="#远程分支" class="headerlink" title="远程分支"></a>远程分支</h2><p>推送本地分支 <code>serverfix</code>：<code>git push origin serverfix</code> ，它是 <code>git push origin serverfix:serverfix</code> 的简写。若想把远程分支叫为 <code>awesomebranch</code> ，可以用 <code>git push origin serverfix:awesomebranch</code> 。</p>
-<p>把远程分支合并到当前分支：<code>git merge origin/serverfix</code> ，如果想要自己的一份远程分支，可以在远程分支上分化出一个新的分支：<code>git checkout -b serverfix origin/serverfix</code> 。本地的这个分支不一定叫 <code>serverfix</code> ，可以换成别的。</p>
-<p>从远程分支 <code>checkout</code> 出来的本地分支被称为跟踪分支。在跟踪分支里输入 <code>git push</code>，Git 会自行推断应该向哪个服务器的哪个分支推送数据。同样，在这些分支里运行 <code>git pull</code> 会获取所有远程索引，并把它们的数据都合并到本地分支中来。</p>
-<p><code>v1.6.2</code> 以上的可以使用 <code>--track</code> 选项简化，如：<code>git checkout --track origin/serverfix</code></p>
-<p>可以使用 <code>git push [远程名] :[分支名]</code> 来删除你不再需要的远程分支。如：<code>git push origin :serverfix</code> 。联想到本地分支的推送，这等于推送了空白分支。</p>
-<h2 id="rebase-衍合"><a href="#rebase-衍合" class="headerlink" title="rebase(衍合)"></a>rebase(衍合)</h2><p>先 <code>git checkout 特性分支名</code> ，再 <code>git rebase master</code> 衍合，相当于给 master 分支打一个补丁，然后切换回去合并，即 master 快进。</p>
-<p>也可以直接 <code>git rebase master 特性分支名</code> ，省去切换到分支再衍合的麻烦。然后 <code>git checkout master</code> <code>git merge 特性分支名</code> 。</p>
-<p><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0331-tn.png" alt="rebase-1"><br><img src="http://oy7msxtdy.bkt.clouddn.com/18333fig0332-tn.png" alt="rebase-2"></p>
-<p>对于这个例子，我们决定先把客户端的修改并到主线，而暂缓并入服务器的修改。使用 <code>git rebase --onto master server client</code> 命令。</p>
-<p>这就是取出 <code>client</code> 分支，找出 <code>client</code> 分支和 <code>server</code> 分支的共同祖先之后的变化，然后把它们在 <code>master</code> 上重演一遍。</p>
-<p><strong>一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行衍合操作。</strong></p>
-<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>看了官方文档前三章之后，再次熟悉了一遍基本的 Git 命令，本来似懂非懂的原理也有了更清楚的认识。然而Git 远远不止这些知识，更多细节还是要去文档的后几章上发掘。我这里先告一段落了，因为这不是首要任务，什么 sass 我还没看呢！Vue 的全家桶也是一知半解，罪过，罪过。。。<br><img src="http://oy7msxtdy.bkt.clouddn.com/102-161101164039.jpg" alt="tuifei"></p>
-
-          
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="http://oy7msxtdy.bkt.clouddn.com/git.jpg" alt="git-logo"><br>之前只在廖雪峰的 Git 教程中简单地学习了一下，并没有在实际的项目中使用过，现阶段正在模仿 Vue 项目，就想着使用一下 Git，更加地模拟以后的工作环境。我是属于边学习<a href="https://git.oschina.net/progit" target="_blank" rel="external">Git中文官方教程</a>边动手使用它，这样更容易掌握这个工具。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/26/重温Git/#espandi" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -710,7 +625,7 @@
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随着 Vue.js 的学习，webpack 已然是必须要掌握的工具。目前，webpack 版本更新到 <code>v3.10.0</code> 了，相比以前应该是优化并成熟了很多。<a href="https://doc.webpack-china.org" target="_blank" rel="external">webpack中文官网</a>上有详细的文档，这篇文章作为我的学习笔记，就大概地记录下重要的知识点。<br><a href="https://doc.webpack-china.org/configuration" target="_blank" rel="external">详细配置</a></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/09/Webpack学习笔记/#more" rel="contents">
+            <a class="btn" href="/2017/12/09/Webpack学习笔记/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -892,7 +807,7 @@
 <p><img src="http://oy7msxtdy.bkt.clouddn.com/vuex.png" alt="vuex"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/27/Vue.js学习笔记11/#more" rel="contents">
+            <a class="btn" href="/2017/11/27/Vue.js学习笔记11/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1074,7 +989,7 @@
 <p>vue-router 是 Vue.js 官方的路由插件，它和 Vue.js 是深度集成的，适合用于构建单页面应用。Vue 的单页面应用是基于路由和组件的，路由用于设定访问路径，并将路径和组件映射起来。传统的页面应用，是用一些超链接来实现页面切换和跳转的。在 vue-router 单页面应用中，则是路径之间的切换，也就是组件的切换。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/26/Vue.js学习笔记10/#more" rel="contents">
+            <a class="btn" href="/2017/11/26/Vue.js学习笔记10/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1262,7 +1177,7 @@
 <p>所有的原始数字都被事先存储起来，可以直接转换到数字。做到这一步，我们就可以结合 Vue 的响应式和组件系统，使用第三方库来实现切换元素的过渡状态。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/22/Vue.js学习笔记9/#more" rel="contents">
+            <a class="btn" href="/2017/11/22/Vue.js学习笔记9/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1449,7 +1364,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/17/Vue.js学习笔记8/#more" rel="contents">
+            <a class="btn" href="/2017/11/17/Vue.js学习笔记8/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1630,7 +1545,7 @@
           <h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="什么是组件？"><a href="#什么是组件？" class="headerlink" title="什么是组件？"></a>什么是组件？</h2><p>组件 (Component) 是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素，Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以表现为用 is 特性进行了扩展的原生 HTML 元素。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/Vue.js学习笔记7/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/Vue.js学习笔记7/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1811,7 +1726,7 @@
           <h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><h2 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h2><p>可以用<code>v-on</code>指令监听 DOM 事件来触发一些 JavaScript 代码。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/09/Vue.js学习笔记6/#more" rel="contents">
+            <a class="btn" href="/2017/11/09/Vue.js学习笔记6/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1992,7 +1907,7 @@
           <h1 id="列表渲染"><a href="#列表渲染" class="headerlink" title="列表渲染"></a>列表渲染</h1><h2 id="用v-for把一个数组对应为一个元素"><a href="#用v-for把一个数组对应为一个元素" class="headerlink" title="用v-for把一个数组对应为一个元素"></a>用<code>v-for</code>把一个数组对应为一个元素</h2><p><code>v-for</code>指令需要使用<code>item in items</code>形式的特殊用法，<code>items</code>是源数据数组，<code>item</code>是数组元素迭代的别名。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/09/Vue.js学习笔记5/#more" rel="contents">
+            <a class="btn" href="/2017/11/09/Vue.js学习笔记5/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2173,7 +2088,7 @@
           <h1 id="Class-与-Style-绑定"><a href="#Class-与-Style-绑定" class="headerlink" title="Class 与 Style 绑定"></a>Class 与 Style 绑定</h1><p>操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用<code>v-bind</code>处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。对此，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/07/Vue.js学习笔记4/#more" rel="contents">
+            <a class="btn" href="/2017/11/07/Vue.js学习笔记4/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
