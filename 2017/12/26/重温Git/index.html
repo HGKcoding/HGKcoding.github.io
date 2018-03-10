@@ -144,7 +144,7 @@
 <meta property="og:image" content="http://oy7msxtdy.bkt.clouddn.com/18333fig0331-tn.png">
 <meta property="og:image" content="http://oy7msxtdy.bkt.clouddn.com/18333fig0332-tn.png">
 <meta property="og:image" content="http://oy7msxtdy.bkt.clouddn.com/102-161101164039.jpg">
-<meta property="og:updated_time" content="2018-01-10T08:48:06.928Z">
+<meta property="og:updated_time" content="2018-01-25T05:44:33.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重温Git">
 <meta name="twitter:description" content="前言之前只在廖雪峰的 Git 教程中简单地学习了一下，并没有在实际的项目中使用过，现阶段正在模仿 Vue 项目，就想着使用一下 Git，更加地模拟以后的工作环境。我是属于边学习Git中文官方教程边动手使用它，这样更容易掌握这个工具。">
@@ -428,7 +428,7 @@
              <i class="fa fa-calendar-o"></i>
            </span>
            <span class="post-meta-item-text">字数统计:</span>
-           <span class="post-count">4,697(字)</span>
+           <span class="post-count">4,762(字)</span>
            
           </span>
 	  
@@ -510,12 +510,19 @@
 <p>举例，如果要查看 Git 仓库中，2008 年 10 月期间，gitster 提交的但未合并的测试脚本（位于项目的 t/ 目录下的文件），可以用下面的查询命令：</p>
 <p><code>$ git log --pretty=&quot;%h - %s&quot; --author=gitster --since=&quot;2008-10-01&quot; --before=&quot;2008-11-01&quot; --no-merges -- t/</code></p>
 <p>可以使用 gitk 这类图形化工具查阅提交历史。</p>
+<p>想要退出 <code>git log</code> 命令只需要按 <code>q</code> 键 </p>
 <h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><h3 id="修改最后一次操作"><a href="#修改最后一次操作" class="headerlink" title="修改最后一次操作"></a>修改最后一次操作</h3><p>有时候我们提交完了才发现漏掉了几个文件没有加，或者提交信息写错了。可以使用 <code>git commit --amend</code> 命令，此命令将使用当前的暂存区域快照提交。如果刚才提交完没有作任何改动，直接运行此命令的话，相当于有机会重新编辑提交说明。新的提交说明会覆盖刚才失误的提交。如果是忘记了暂存某些修改，可以在先补上暂存操作，再运行 <code>git commit --amend</code> 命令。</p>
 <h3 id="取消已经暂存的文件"><a href="#取消已经暂存的文件" class="headerlink" title="取消已经暂存的文件"></a>取消已经暂存的文件</h3><p>假如失误用 <code>git add .</code> 命令将修改全加到暂存区域，可以通过 <code>git reset HEAD &lt;file&gt;...</code> 的方式取消暂存。</p>
 <h3 id="取消对文件的修改"><a href="#取消对文件的修改" class="headerlink" title="取消对文件的修改"></a>取消对文件的修改</h3><p>使用 <code>git checkout --&lt;file&gt;...</code> 命令抛弃文件修改。这些命令 Git 会提示你。要慎重使用这条命令，它会取消所有对文件的修改，所以在用这条命令前，请务必确定真的不再需要保留刚才的修改。如果只是想回退版本，同时保留刚才的修改以便将来继续工作，可以用 stashing 和分支来处理，应该会更好些。</p>
 <p>任何已经提交到 Git 的都可以被恢复。所以，你可能失去的数据，仅限于没有提交过的，对 Git 来说它们就像从未存在过一样。</p>
 <h2 id="远程仓库的使用"><a href="#远程仓库的使用" class="headerlink" title="远程仓库的使用"></a>远程仓库的使用</h2><h3 id="查看当前的远程仓库"><a href="#查看当前的远程仓库" class="headerlink" title="查看当前的远程仓库"></a>查看当前的远程仓库</h3><p>可以使用 <code>git remove</code> 命令来查看当前配置有哪些远程仓库。它会列出每个远程库的简短名字，在克隆完某个项目后，至少可以看到一个名为 origin 的远程库，Git 默认使用这个名字来标识你所克隆的原始仓库。加个 <code>-v</code> 选项可以显示对应的克隆地址。</p>
 <h3 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h3><p>要添加一个新的远程仓库，可以指定一个简单的名字，以便将来引用，运行 <code>git remote add [shortname] [url]</code>。</p>
+<h3 id="修改远程仓库"><a href="#修改远程仓库" class="headerlink" title="修改远程仓库"></a>修改远程仓库</h3><p>有三种方式：</p>
+<ol>
+<li>修改命令： <code>git remote origin set-url &lt;URL&gt;</code></li>
+<li>先删后加： 先<code>git remote rm origin</code>，再<code>git remote add origin git@github.com:&lt;Username&gt;/&lt;Repository&gt;.git</code></li>
+<li>直接修改 config 文件</li>
+</ol>
 <h3 id="从远程仓库抓取数据"><a href="#从远程仓库抓取数据" class="headerlink" title="从远程仓库抓取数据"></a>从远程仓库抓取数据</h3><p>使用 <code>git fetch [remote-name]</code> ，这条命令只会抓取所有你本地仓库中还没有的数据。如果是克隆的一个仓库，使用 <code>git fetch origin</code> 来获取更新。</p>
 <p>如果设置了某个分支用于跟踪某个远端仓库的分支，可以使用 <code>git pull</code> 命令自动抓取数据下来，然后将远端分支自动合并到本地仓库中当前分支。实际上，默认情况下 <code>git clone</code> 命令本质上就是自动创建了本地的 master 分支用于跟踪远程仓库中的 master 分支（假设远程仓库确实有 master 分支）。所以一般我们运行 <code>git pull</code>，目的都是要从原始克隆的远端仓库中抓取数据后，合并到工作目录中的当前分支。</p>
 <h3 id="推送数据到远程仓库"><a href="#推送数据到远程仓库" class="headerlink" title="推送数据到远程仓库"></a>推送数据到远程仓库</h3><p>项目进行到一个阶段，要同别人分享目前的成果，可以将本地仓库中的数据推送到远程仓库。实现这个任务的命令很简单： <code>git push [remote-name] [branch-name]</code>。</p>
@@ -606,6 +613,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/03/10/2018年3月9日面试总结/" rel="prev" title="2018年3月9日面试总结">
+                2018年3月9日面试总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -693,7 +704,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -704,7 +715,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -715,7 +726,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -772,7 +783,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始使用"><span class="nav-number">2.</span> <span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初次运行-Git-前的配置"><span class="nav-number">2.1.</span> <span class="nav-text">初次运行 Git 前的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户信息"><span class="nav-number">2.1.1.</span> <span class="nav-text">用户信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取帮助"><span class="nav-number">2.2.</span> <span class="nav-text">获取帮助</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-基础"><span class="nav-number">3.</span> <span class="nav-text">Git 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#取得项目的-Git-仓库"><span class="nav-number">3.1.</span> <span class="nav-text">取得项目的 Git 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录每次更新到仓库"><span class="nav-number">3.2.</span> <span class="nav-text">记录每次更新到仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提交文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">提交文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除文件"><span class="nav-number">3.2.2.</span> <span class="nav-text">移除文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看提交历史"><span class="nav-number">3.3.</span> <span class="nav-text">查看提交历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#限制输出长度"><span class="nav-number">3.3.1.</span> <span class="nav-text">限制输出长度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撤销操作"><span class="nav-number">3.4.</span> <span class="nav-text">撤销操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改最后一次操作"><span class="nav-number">3.4.1.</span> <span class="nav-text">修改最后一次操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消已经暂存的文件"><span class="nav-number">3.4.2.</span> <span class="nav-text">取消已经暂存的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消对文件的修改"><span class="nav-number">3.4.3.</span> <span class="nav-text">取消对文件的修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库的使用"><span class="nav-number">3.5.</span> <span class="nav-text">远程仓库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看当前的远程仓库"><span class="nav-number">3.5.1.</span> <span class="nav-text">查看当前的远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加远程仓库"><span class="nav-number">3.5.2.</span> <span class="nav-text">添加远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从远程仓库抓取数据"><span class="nav-number">3.5.3.</span> <span class="nav-text">从远程仓库抓取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送数据到远程仓库"><span class="nav-number">3.5.4.</span> <span class="nav-text">推送数据到远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看远程仓库信息"><span class="nav-number">3.5.5.</span> <span class="nav-text">查看远程仓库信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程仓库的删除和重命名"><span class="nav-number">3.5.6.</span> <span class="nav-text">远程仓库的删除和重命名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打标签"><span class="nav-number">3.6.</span> <span class="nav-text">打标签</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支"><span class="nav-number">4.</span> <span class="nav-text">分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">4.1.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于分支的命令"><span class="nav-number">4.2.</span> <span class="nav-text">关于分支的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程分支"><span class="nav-number">4.3.</span> <span class="nav-text">远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rebase-衍合"><span class="nav-number">4.4.</span> <span class="nav-text">rebase(衍合)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始使用"><span class="nav-number">2.</span> <span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初次运行-Git-前的配置"><span class="nav-number">2.1.</span> <span class="nav-text">初次运行 Git 前的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户信息"><span class="nav-number">2.1.1.</span> <span class="nav-text">用户信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取帮助"><span class="nav-number">2.2.</span> <span class="nav-text">获取帮助</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-基础"><span class="nav-number">3.</span> <span class="nav-text">Git 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#取得项目的-Git-仓库"><span class="nav-number">3.1.</span> <span class="nav-text">取得项目的 Git 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录每次更新到仓库"><span class="nav-number">3.2.</span> <span class="nav-text">记录每次更新到仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提交文件"><span class="nav-number">3.2.1.</span> <span class="nav-text">提交文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除文件"><span class="nav-number">3.2.2.</span> <span class="nav-text">移除文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看提交历史"><span class="nav-number">3.3.</span> <span class="nav-text">查看提交历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#限制输出长度"><span class="nav-number">3.3.1.</span> <span class="nav-text">限制输出长度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撤销操作"><span class="nav-number">3.4.</span> <span class="nav-text">撤销操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改最后一次操作"><span class="nav-number">3.4.1.</span> <span class="nav-text">修改最后一次操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消已经暂存的文件"><span class="nav-number">3.4.2.</span> <span class="nav-text">取消已经暂存的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消对文件的修改"><span class="nav-number">3.4.3.</span> <span class="nav-text">取消对文件的修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程仓库的使用"><span class="nav-number">3.5.</span> <span class="nav-text">远程仓库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看当前的远程仓库"><span class="nav-number">3.5.1.</span> <span class="nav-text">查看当前的远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加远程仓库"><span class="nav-number">3.5.2.</span> <span class="nav-text">添加远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改远程仓库"><span class="nav-number">3.5.3.</span> <span class="nav-text">修改远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从远程仓库抓取数据"><span class="nav-number">3.5.4.</span> <span class="nav-text">从远程仓库抓取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送数据到远程仓库"><span class="nav-number">3.5.5.</span> <span class="nav-text">推送数据到远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看远程仓库信息"><span class="nav-number">3.5.6.</span> <span class="nav-text">查看远程仓库信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程仓库的删除和重命名"><span class="nav-number">3.5.7.</span> <span class="nav-text">远程仓库的删除和重命名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打标签"><span class="nav-number">3.6.</span> <span class="nav-text">打标签</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支"><span class="nav-number">4.</span> <span class="nav-text">分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#合并分支"><span class="nav-number">4.1.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于分支的命令"><span class="nav-number">4.2.</span> <span class="nav-text">关于分支的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程分支"><span class="nav-number">4.3.</span> <span class="nav-text">远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rebase-衍合"><span class="nav-number">4.4.</span> <span class="nav-text">rebase(衍合)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
