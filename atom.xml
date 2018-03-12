@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hu Guokang&#39;s Blog</title>
+  <title>一个人的独白</title>
   
-  <subtitle>Stupid is as stupid does.</subtitle>
+  <subtitle>我，现在，仍走在转行前端的路上</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://huguokang.com/"/>
@@ -10,7 +10,7 @@
   <id>http://huguokang.com/</id>
   
   <author>
-    <name>胡国康</name>
+    <name>一个佛系小哥</name>
     
   </author>
   
