@@ -1833,7 +1833,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff6fff;
+  background: #9d04c2;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3015,7 +3015,19 @@ pre .javascript .function {
   }
 }
 body {
-  background: linear-gradient(45deg, #ffa500, #ffa500 40%, #0ff);
+  background: -webkit-linear-gradient(-234deg, #431448 4%, rgba(0,0,0,0) 4%), -webkit-linear-gradient(54deg, #431448 4%, rgba(0,0,0,0) 4%), -webkit-linear-gradient(18deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -webkit-linear-gradient(-198deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -webkit-linear-gradient(-126deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -webkit-linear-gradient(-54deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -webkit-linear-gradient(-234deg, #431448 4%, rgba(0,0,0,0) 4%), -webkit-linear-gradient(54deg, #431448 4%, rgba(0,0,0,0) 4%), -webkit-linear-gradient(18deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -webkit-linear-gradient(-198deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -webkit-linear-gradient(-126deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -webkit-linear-gradient(-54deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), #431448;
+  background: -moz-linear-gradient(324deg, #431448 4%, rgba(0,0,0,0) 4%), -moz-linear-gradient(36deg, #431448 4%, rgba(0,0,0,0) 4%), -moz-linear-gradient(72deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -moz-linear-gradient(288deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -moz-linear-gradient(216deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -moz-linear-gradient(144deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -moz-linear-gradient(324deg, #431448 4%, rgba(0,0,0,0) 4%), -moz-linear-gradient(36deg, #431448 4%, rgba(0,0,0,0) 4%), -moz-linear-gradient(72deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -moz-linear-gradient(288deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), -moz-linear-gradient(216deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), -moz-linear-gradient(144deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), #431448;
+  background: linear-gradient(324deg, #431448 4%, rgba(0,0,0,0) 4%), linear-gradient(36deg, #431448 4%, rgba(0,0,0,0) 4%), linear-gradient(72deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), linear-gradient(288deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), linear-gradient(216deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), linear-gradient(144deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), linear-gradient(324deg, #431448 4%, rgba(0,0,0,0) 4%), linear-gradient(36deg, #431448 4%, rgba(0,0,0,0) 4%), linear-gradient(72deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), linear-gradient(288deg, #e3d7bf 8.5%, rgba(0,0,0,0) 8.5%), linear-gradient(216deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), linear-gradient(144deg, #e3d7bf 7.5%, rgba(0,0,0,0) 7.5%), #431448;
+  background-position: -70px 43px, 30px 43px, 30px 43px, -70px 43px, -70px 23px, 30px 23px, -20px 93px, 80px 93px, 80px 93px, -20px 93px, -20px 73px, 80px 73px;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: 100px 100px;
+  background-size: 100px 100px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-shadow: none;
 }
 .post {
   margin-top: 60px;
